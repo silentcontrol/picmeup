@@ -35,6 +35,9 @@
     cursor: pointer;
     background-color: #4b0dc2; }
 
+a {
+  text-decoration: none; }
+
 .display {
   grid-column: center-start/center-end;
   grid-row: 1;

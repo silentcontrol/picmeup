@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Display from "../../components/Display/Display";
 import Navigation from "../../components/Navigation/Navigation";
 const Fragment = React.Fragment;
