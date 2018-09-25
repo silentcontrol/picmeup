@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"export\" \"node ./bin/www\" \"cd react-client && npm start\"",
+    "start": "concurrently \"server_up\" \"cd react-client && npm start\"",
     "dev": "server_up"
   },
   "bin": {
@@ -20,6 +20,7 @@
     "shelljs": "^0.8.2"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^4.0.1",
+    "nodemon": "^1.18.4"
   }
 }

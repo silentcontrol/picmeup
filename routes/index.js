@@ -33,14 +33,15 @@ router.post('/annotations', (req, res) => {
   console.log('req.body.image:', req.body.image);
   // const allAnnotations = getAllAnnotations(req.body.image);
   const allAnnotations = [];
-  Promise.all([client.labelDetection(imageURL), client.textDetection(imageURL), client.webDetection(imageURL)])
+  //client.labelDetection(imageURL), client.textDetection(imageURL),
+  Promise.all([client.webDetection(imageURL)])
     .then(results => {
       let allAnnotations = [];
       res.json([{
         text: 'POST /annotations',
-        labelAnnotations: extractLabelAnnotations(results[0]),
-        textAnnotations: extractTextAnnotations(results[1]),
-        webAnnotations: extractWebAnnotations(results[2])
+        // labelAnnotations: extractLabelAnnotations(results[0]),
+        // textAnnotations: extractTextAnnotations(results[1]),
+        webAnnotations: extractWebAnnotations(results[0])
       }]);
     })
     .catch(err => {
@@ -65,14 +66,24 @@ const extractLabelAnnotations = (result) => {
 const extractTextAnnotations = (result) => {
   const texts = result[0].textAnnotations;
   let allAnnotations = [];
-  texts.forEach(text => allAnnotations.push(text.description));
+  texts.forEach(text => {
+    allAnnotations.push({
+      "description": text.description,
+      "score": text.score
+    });
+  });
   return allAnnotations;
 }
 
 const extractWebAnnotations = (result) => {
   const entities = result[0].webDetection.webEntities;
-  let allAnnotations = [];
-  entities.forEach(entity => allAnnotations.push(entity.description))
+  let allAnnotations = entities.filter(entity => entity.score >= 0.5 && entity.description);
+  allAnnotations = allAnnotations.map(entity => {
+    return {
+      "description": entity.description,
+      "score": entity.score
+    }
+  });
   return allAnnotations;
 }
 
