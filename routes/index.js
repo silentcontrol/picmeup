@@ -26,16 +26,14 @@ router.post('/search', (req, res) => {
   }]);
 });
 
+/* POST order to server */
 router.post('/orders', (req, res) => {
   res.sendStatus(200);
 });
 
+/* POST image to server for google vision api annotations */
 router.post('/annotations', upload.single('image'), (req, res) => {
-  // const imageURL = './resources/IMG_5019.JPG';
-  console.log(req.file)
   const imageBuffer = req.file.buffer;
-  // const allAnnotations = getAllAnnotations(req.body.image);
-  const allAnnotations = [];
   Promise.all([client.webDetection({
     image: {
       'content': imageBuffer
