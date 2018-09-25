@@ -1,6 +1,8 @@
 var express = require('express');
 const router = express.Router();
-const extractWebAnnotations = require('./helpers.js')
+var multer = require('multer');
+const { extractWebAnnotations, multerConfig } = require('./helpers.js');
+const upload = multer(multerConfig);
 
 const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient();
@@ -28,13 +30,17 @@ router.post('/orders', (req, res) => {
   res.sendStatus(200);
 });
 
-router.post('/annotations', (req, res) => {
-  const imageURL = './resources/IMG_5019.JPG';
-  console.log('req.body.image:', req.body.image);
+router.post('/annotations', upload.single('image'), (req, res) => {
+  // const imageURL = './resources/IMG_5019.JPG';
+  console.log(req.file)
+  const imageBuffer = req.file.buffer;
   // const allAnnotations = getAllAnnotations(req.body.image);
   const allAnnotations = [];
-  //client.labelDetection(imageURL), client.textDetection(imageURL),
-  Promise.all([client.webDetection(imageURL)])
+  Promise.all([client.webDetection({
+    image: {
+      'content': imageBuffer
+    }
+  })])
     .then(results => {
       res.json([{
         text: 'POST /annotations',
