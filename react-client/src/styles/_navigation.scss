@@ -24,6 +24,13 @@
   transition: all 0.2s;
   text-transform: uppercase;
 
+  &.active {
+    background-color: #4b0dc2;
+    -webkit-box-shadow: inset 0px 0px 10px #c1c1c1;
+    -moz-box-shadow: inset 0px 0px 10px #c1c1c1;
+    box-shadow: inset 0px 0px 10px #c1c1c1;
+  }
+
   &:hover {
     cursor: pointer;
     background-color: #4b0dc2;
