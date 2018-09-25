@@ -5,11 +5,12 @@ const Fragment = React.Fragment;
 
 export default class Catalogue extends Component {
   render() {
+    const {} = this.props;
     console.log("Catalogue");
     return (
       <Fragment>
         <Display />
-        <Navigation />
+        <Navigation activeButton={"catalogue"} />
       </Fragment>
     );
   }

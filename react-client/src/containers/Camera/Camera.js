@@ -5,11 +5,12 @@ const Fragment = React.Fragment;
 
 export default class Camera extends Component {
   render() {
+    const {} = this.props;
     console.log("Camera");
     return (
       <Fragment>
         <Display />
-        <Navigation />
+        <Navigation activeButton={"camera"} />
       </Fragment>
     );
   }

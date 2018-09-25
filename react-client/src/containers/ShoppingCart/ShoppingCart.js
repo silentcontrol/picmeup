@@ -5,11 +5,12 @@ const Fragment = React.Fragment;
 
 export default class ShoppingCart extends Component {
   render() {
+    const {} = this.props;
     console.log("ShoppingCart");
     return (
       <Fragment>
         <Display />
-        <Navigation />
+        <Navigation activeButton={"shopping-cart"} />
       </Fragment>
     );
   }
