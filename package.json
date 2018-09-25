@@ -3,17 +3,25 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"node ./bin/www\" \"cd react-client && npm start\""
+    "start": "concurrently \"server_up\" \"cd react-client && npm start\"",
+    "dev": "server_up"
+  },
+  "bin": {
+    "server_up": "bin/server_up.js"
   },
   "dependencies": {
+    "@google-cloud/vision": "^0.22.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
-    "morgan": "~1.9.0"
+    "morgan": "~1.9.0",
+    "multer": "^1.3.1",
+    "shelljs": "^0.8.2"
   },
   "devDependencies": {
-    "concurrently": "^4.0.1"
+    "concurrently": "^4.0.1",
+    "nodemon": "^1.18.4"
   }
 }
