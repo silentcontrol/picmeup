@@ -1,9 +1,11 @@
 .display {
   grid-column: center-start/center-end;
+  grid-template-rows: 0.1fr 0.8fr 0.1fr;
   grid-row: 1;
   display: grid;
   height: 100%;
   border-top: 0.5rem solid #7433f1;
   border-left: 0.5rem solid #7433f1;
   border-right: 0.5rem solid #7433f1;
+  justify-items: center;
 }

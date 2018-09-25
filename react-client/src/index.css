@@ -40,12 +40,45 @@ a {
 
 .display {
   grid-column: center-start/center-end;
+  grid-template-rows: 0.1fr 0.8fr 0.1fr;
   grid-row: 1;
   display: grid;
   height: 100%;
   border-top: 0.5rem solid #7433f1;
   border-left: 0.5rem solid #7433f1;
-  border-right: 0.5rem solid #7433f1; }
+  border-right: 0.5rem solid #7433f1;
+  justify-items: center; }
+
+.pop-up {
+  grid-row: 2;
+  align-self: center;
+  background-color: orangered;
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 75%;
+  height: 75%; }
+  .pop-up__top-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center; }
+  .pop-up__middle-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center; }
+  .pop-up__bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center; }
+  .pop-up__product-name {
+    font-size: 5rem; }
+  .pop-up__product-price {
+    font-size: 5rem; }
+  .pop-up__label {
+    font-size: 4rem;
+    text-transform: uppercase; }
+
+.button__container {
+  display: flex; }
 
 *,
 *::before,

@@ -1,0 +1,39 @@
+.pop-up {
+  grid-row: 2;
+  align-self: center;
+  background-color: orangered;
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 75%;
+  height: 75%;
+  &__top-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+  }
+
+  &__middle-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+  }
+
+  &__bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+  }
+
+  &__product-name {
+    font-size: 5rem;
+  }
+
+  &__product-price {
+    font-size: 5rem;
+  }
+
+  &__label {
+    font-size: 4rem;
+    text-transform: uppercase;
+  }
+}
