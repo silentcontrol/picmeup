@@ -42,3 +42,5 @@ const getAllAnnotations = (imageURL) => {
   allAnnotations.concat(getLabelAnnotations(imageURL));
   return allAnnotations;
 }
+
+module.exports = getAllAnnotations;
