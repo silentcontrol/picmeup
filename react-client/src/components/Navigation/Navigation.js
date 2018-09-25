@@ -1,5 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  shoppingcartPage__URL,
+  cameraPage__URL,
+  cataloguePage__URL
+} from "../../config/keys";
 
 const Fragment = React.Fragment;
 
@@ -13,10 +18,10 @@ const Navigation = ({ activeButton }) => {
             <div className="camera active">
               <div className="header__secondary">Cam</div>
             </div>
-            <Link to="/catalogue" className="catalogue">
+            <Link to={cataloguePage__URL} className="catalogue">
               <div className="header__secondary">Cata</div>
             </Link>
-            <Link to="./shoppingcart" className="shopping-cart">
+            <Link to={shoppingcartPage__URL} className="shopping-cart">
               <div className="header__secondary">Cart</div>
             </Link>
           </Fragment>
@@ -25,13 +30,13 @@ const Navigation = ({ activeButton }) => {
       case "catalogue":
         return (
           <Fragment>
-            <Link to="/camera" className="camera">
+            <Link to={cameraPage__URL} className="camera">
               <div className="header__secondary">Cam</div>
             </Link>
             <div className="catalogue active">
               <div className="header__secondary">Cata</div>
             </div>
-            <Link to="/shoppingcart" className="shopping-cart">
+            <Link to={shoppingcartPage__URL} className="shopping-cart">
               <div className="header__secondary">Cart</div>
             </Link>
           </Fragment>
@@ -40,10 +45,10 @@ const Navigation = ({ activeButton }) => {
       case "shopping-cart":
         return (
           <Fragment>
-            <Link to="/camera" className="camera">
+            <Link to={cameraPage__URL} className="camera">
               <div className="header__secondary">Cam</div>
             </Link>
-            <Link to="/catalogue" className="catalogue">
+            <Link to={cataloguePage__URL} className="catalogue">
               <div className="header__secondary">Cata</div>
             </Link>
             <div className="shopping-cart active">
