@@ -21,3 +21,5 @@ yarn-debug.log*
 yarn-error.log*
 
 MyFirstProject-f27240d3a3f3.json
+
+.ENV

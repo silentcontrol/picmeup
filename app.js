@@ -1,9 +1,7 @@
 require('dotenv').config();
 
-
 var ENV = 'development';
 var knexConfig = require('./knexfile.js');
-// knex helpers
 var knex = require('knex')(knexConfig[ENV]);
 var dbQuery = require('./db/queryHelper')(knex);
 var dbInsert = require('./db/insertHelper')(knex);
