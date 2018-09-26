@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "diesel-skyline-216917",
+  "private_key_id": "f27240d3a3f3813e055addb5ea417105cf7a97df",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQDBzJX1egsELrmb\njKcdaJtl69U+z/2y3aYiK8PXpPGtoUDoflEo+aMv8oC8RosHvMZI79hqtkGoMpav\nFt8t5KW8t7+cxFT4zgnL/ztuZjA/eZTSmtkE/9DpYu1ioHy1ZEgkyXN+CFzhMEgw\nteanmhzvr5I/IuBAgJPQKeR2PH/ByiAPmALPdY0p+oXAuHwqybWOdx/F/BpLiUv8\ntkvHFAylTkc/fH8D/7CPSj5KbQ/ObZPLa2RMXiEMVoEFwqeyxJuhoRhSgQM1aJsR\nmaOpBocilEQCitnIWAS7j93thyrzAS8HaOr0+6JyjoZf0LpU/luwctYAjKq38upA\niQVOeoWLAgMBAAECggEACLvZGD5/R5l5eOaeU2d29WFq81E5TDnL9mdFhK7ky1/k\nhnXG35NchNknbxS4yEj8IKZaePisvdFF1C8yMKXIyFf5lS2N7MaQT3a5rXCChSHM\nEK+0zxJeTl5Md3DnHd+elrXTdB8ZXHaqEjPoaK471ptxelHujEmfH7b7mk6ArXGD\n6zP5M5IWTliNb8cPPblv0jwoAZLxqAgXqzegTN3nB4VsjyMMQ5IPCtaSUqDcsHgI\n2UHXJEJ6zcZqfXPPnYGuyVCYgYAQ1gfhXhBnUMtBJGNE+q1B3fDBfrgQsBmkjGM1\n+l3H5G4+mFql8cV1fmv2k7etEw0PjLh04o2u2ZatPQKBgQDiTXalPlMsZ8itGcIJ\n/7pskhE0PIme/6oHJDlDVaIIQhsKxnc+/iGp4ofJwI7TQ9KmAr+Q016DbISq9MeZ\nYunasmCsoSl7vqYR/euw12Tgw6xS37mJtYU1wjgrCDl3QJLqfGYmPT1gJ0FaHQsM\nXjASa0iIMW8g45S7QkFxkGIqRwKBgQDbOy8Rl0NpmvxXmuo5ESC/HI6jJEy2wkBJ\nSFzUvbQS6Zi6Unu+82ulbrBpmZV8smntzUrBvRKXqjOr3bqE5tHYCL6uVsIn5PNi\n/LrfsIPLlgpHCZL9BR4t+VZdBypeRjxPag0amJ1GtMQcZ+vspEsOv2amKAi6K7zT\nVOg9sTionQKBgQCx2zW7Kx+NT8ftG8hfuWeX+riguE9k8gR8dmC25e9h1CqSrmZ7\n0Jk+fnY//yGBMtW0eYZ7WVP3sGsYPSc+CvpGUlkec885nR3CGDGLm82BxOeDfqfA\nbjRSiuFAGMepTMvqlHhn50t8bX20SA0t3DylzUGFIGz5iUOUZL8wdMxh8wKBgQDD\njQUtMboGByMzmZF3mdmV3wk0aHqtQpRJSezULurjO87p1A1hhIvuos9lQoPfGN34\nKniWW+qrsjwo/70SMznW8+XyaJ0DLOwUzc57HV5SSOGd/+JHIzuKUrBAhtW6Bfhh\n9fz+Tkdr/G450FDXYq042G3dpDQ0rDLgZwpJjT022QKBgQCpKT0VkTv+BGxbjN25\nF83rvso6q2cWCHFCyofnb1+F+cDCtoZl7EmZ9R8aSPQeorOTg2MZHERCVOhuCc+6\ncAo8IxQaLM3AhtKh7hX/MSaBYKykttKcpVBzLq561o0lVPmYZ1EVvE5PkNqMR5QQ\nG7uYh6ovtTUjYN6nmxk+PjxiOA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "grocery-app@diesel-skyline-216917.iam.gserviceaccount.com",
+  "client_id": "118357666681841025100",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/grocery-app%40diesel-skyline-216917.iam.gserviceaccount.com"
+}
