@@ -1,6 +1,17 @@
 module.exports = function (knex) {
   return {
-    // user functions
+    // products table helper
+    addProduct: async (productName, priceInCents) => {
+      return await
+        knex('products')
+          .insert([
+            {
+              product_name: productName,
+              price_in_cents: priceInCents
+            }
+          ])
+    },
+    // users table helper
     addUser: async (firstName, lastName, email, password) => {
       return await
         knex('users')
@@ -17,15 +28,15 @@ module.exports = function (knex) {
       return await
         knex('users')
           .where({ id: `${userId}` })
-          .update({ token: `${tokenId}`  })
+          .update({ token: `${tokenId}` })
     },
     clearUserToken: async (userId) => {
       return await
         knex('users')
           .where({ id: `${userId}` })
-          .update({ token: null  })
+          .update({ token: null })
     },
-    // order functions
+    // orders table helper
     addOrder: async (userId) => {
       return await
         knex('orders')
@@ -37,12 +48,19 @@ module.exports = function (knex) {
           ])
           .returning('id');
     },
+    addOrderTotal: async (orderId, orderTotal) => {
+      return await
+        knex('orders')
+          .where({ id: `${orderId}` })
+          .update({ order_total: `${orderTotal}` })
+    },
     completeOrder: async (orderId) => {
       return await
         knex('orders')
           .where({ id: `${orderId}` })
           .update({ order_completed: true })
     },
+    // line_items table helper
     addLineItem: async (orderId, productId, priceInCents, quantity) => {
       return await
         knex('line_items')
@@ -55,17 +73,6 @@ module.exports = function (knex) {
               line_total: priceInCents * quantity
             }
           ])
-    },
-    // product functions
-    addProduct: async (productName, priceInCents) => {
-      return await
-        knex('products')
-          .insert([
-            {
-              product_name: productName,
-              price_in_cents: priceInCents
-            }
-          ])
-    },
+    }
   };
 }
