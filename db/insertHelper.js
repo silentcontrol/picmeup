@@ -35,6 +35,7 @@ module.exports = function (knex) {
               order_completed: false
             }
           ])
+          .returning('id');
     },
     completeOrder: async (orderId) => {
       return await

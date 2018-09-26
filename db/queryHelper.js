@@ -1,6 +1,23 @@
 module.exports = function (knex) {
   return {
     // products table helpers
+    getAllProducts: async () => {
+      return await
+        knex('products')
+          .orderBy('id', 'asc')
+          .then(res => res).catch(function (e) {
+            return 'cannot get product list';
+          })
+    },
+    searchProductByName: async (name) => {
+      let normalizedName = name.charAt(0).toUpperCase() + name.substr(1).toLowerCase();
+      return await
+        knex('products')
+          .where('product_name', normalizedName)
+          .then(res => res).catch(function (e) {
+            return 'product name cannot be found';
+          })
+    },
     getProductPriceById: async (productId) => {
       return await
         knex('products')
@@ -8,16 +25,6 @@ module.exports = function (knex) {
           .select('price_in_cents')
           .then(res => res[0].price_in_cents).catch(function (e) {
             return 'product id cannot be found';
-          })
-    },
-    getProductPriceByName: async (name) => {
-      let normalizedName = name.charAt(0).toUpperCase() + name.substr(1).toLowerCase();
-      return await
-        knex('products')
-          .where('product_name', normalizedName)
-          .select('price_in_cents')
-          .then(res => res[0].price_in_cents).catch(function (e) {
-            return 'product name cannot be found';
           })
     },
     getProductNameById: async (productId) => {

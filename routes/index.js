@@ -22,21 +22,34 @@ router.get('/', (req, res) => {
 
 /* GET list of products */
 router.get('/products', async (req, res) => {
-  await dbInsert.addProduct('hey you', 1000);
-  res.json([{
-    text: 'GET /products routing'
-  }]);
+  res.json(await dbQuery.getAllProducts());
 });
 
 /* GET results for search query stirng */
-router.post('/search', (req, res) => {
-  res.json([{
-    text: 'GET /search routing'
-  }]);
+router.post('/search', async (req, res) => {
+  // placeholder for serach query, actual search keyword should be come from req.body
+  // APPLE is the placeholder for the serach keyword
+  res.json(await dbQuery.searchProductByName('APPLE'));
 });
 
 /* POST order to server */
-router.post('/orders', (req, res) => {
+router.post('/orders', async (req, res) => {
+  // placeholder for order details query, userId should be come from req.body
+  // 1 is the placeholder for the userId
+  var orderId = await dbInsert.addOrder(1);
+
+  // sample shopping cart order
+  // order details should come from the client 
+  var order = [
+    { productId: 1, priceInCents: 25, quantity: 1 },
+    { productId: 10, priceInCents: 450, quantity: 2 },
+    { productId: 20, priceInCents: 123, quantity: 3 },
+  ]
+
+  order.forEach(async line => {
+    await dbInsert.addLineItem(orderId[0], line.productId, line.priceInCents, line.quantity)
+  });
+
   res.sendStatus(200);
 });
 
