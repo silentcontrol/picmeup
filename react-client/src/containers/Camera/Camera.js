@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Display from "../../components/Display/Display";
+import CameraDisplay from "../../components/Display/CameraDisplay";
 import Navigation from "../../components/Navigation/Navigation";
+
 const Fragment = React.Fragment;
 
 export default class Camera extends Component {
@@ -10,7 +11,7 @@ export default class Camera extends Component {
     console.log("Camera");
     return (
       <Fragment>
-        <Display />
+        <CameraDisplay />
         <Navigation activeButton={"camera"} />
       </Fragment>
     );

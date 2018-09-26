@@ -55,8 +55,8 @@ a {
   background-color: orangered;
   display: grid;
   grid-template-columns: 1fr;
-  width: 75%;
-  height: 75%; }
+  border: 0.5rem solid grey;
+  font-size: 4rem; }
   .pop-up__top-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -76,6 +76,11 @@ a {
   .pop-up__label {
     font-size: 4rem;
     text-transform: uppercase; }
+
+.popup-content {
+  width: auto;
+  background: none;
+  border: none; }
 
 .button__container {
   display: flex; }

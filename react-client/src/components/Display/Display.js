@@ -4,7 +4,7 @@ export class Display extends Component {
   render() {
     return (
       <section className="display">
-        <div className="pop-up">
+        {/* <div className="pop-up">
           <div className="pop-up__top-row">
             <div className="pop-up__product-name">Apple</div>
             <div className="pop-up__product-price">$3.99</div>
@@ -21,7 +21,7 @@ export class Display extends Component {
             <div className="button button__cancel">Cancel</div>
             <div className="button button__cancel">Add</div>
           </div>
-        </div>
+        </div> */}
       </section>
     );
   }
