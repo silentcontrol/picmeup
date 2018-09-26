@@ -3,14 +3,15 @@ import React, { Component } from 'react';
 import './App.css';
 
 import LeftNavBar from './components/left_navbar/LeftNavBar'
+import Orders from './components/orders_table/OrdersTable'
 
 class App extends Component {
   render() {
     return (
-      <div style={{display: 'flex', flexDirection: 'row'}}>
+      <div className="body-container">
         <LeftNavBar />
         <div>
-          <p>Placeholder</p>
+          <Orders />
         </div>
       </div>
     );
