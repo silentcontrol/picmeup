@@ -2,7 +2,6 @@ import React from 'react';
 import { withRR4, Nav, NavIcon, NavText } from 'react-sidenav';
 import SvgIcon from 'react-icons-kit';
 
-// import { navicon } from 'react-icons-kit/fa/navicon';
 import { ic_history } from 'react-icons-kit/md/ic_history';
 import { ic_payment } from 'react-icons-kit/md/ic_payment';
 
@@ -11,11 +10,6 @@ import './LeftNavBar.css'
 const SideNav = withRR4();
 
 const Title = () => {
-  /*
-  <div className="left-navbar-title-icon">
-        <SvgIcon size={20} icon={navicon}/>
-      </div>
-  */
   return(
     <div className="left-navbar-title">
       {"Pic Me Up"}

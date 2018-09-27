@@ -1,0 +1,45 @@
+.orders-container{
+  width: 100%;
+}
+
+.orders-header{
+  padding: 0.5625rem 0.5625rem 0.5625rem 1.5rem;
+}
+
+.table-orders{
+  width: 90%;
+  margin-left: 1.5rem;
+  margin-top: 1.5rem;
+  border: 1pt #f2f2f2 solid;
+  border-radius: 0.5rem;
+}
+
+th{
+  padding: 0.25rem;
+  border-right: 1pt #f2f2f2 solid;
+  background: #f2f2f2;
+}
+
+tr:nth-child(even){
+  background: #f2f2f2;
+}
+
+tr:hover td{
+  background: #d6cfe2;
+}
+
+td{
+  padding: 0.25rem;
+  border-right: 1pt #f2f2f2 solid;
+  text-align: center;
+}
+
+td.span-all{
+  border-right: none;
+}
+
+.last{
+  padding: 0.25rem;
+  border-right: none;
+  text-align: center;
+}

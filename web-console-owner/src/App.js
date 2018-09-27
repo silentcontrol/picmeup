@@ -10,9 +10,7 @@ class App extends Component {
     return (
       <div className="body-container">
         <LeftNavBar />
-        <div>
-          <Orders />
-        </div>
+        <Orders />
       </div>
     );
   }
