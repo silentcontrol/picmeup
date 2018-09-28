@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_HOST = 'http://localhost:3001'
-const API_NAMESPACE = '/orders'
+const API_NAMESPACE = '/owner'
 const BASEURL = `${API_HOST}${API_NAMESPACE}`
 
 const server = axios.create({
