@@ -16,13 +16,13 @@ function get(endpoint, data){
   return server.get(endpoint, data);
 }
 
-function patch(endpoint, data){
-  return server.patch(endpoint, data);
+function post(endpoint, data){
+  return server.post(endpoint, data);
 }
 
 const api = {
   get: get,
-  patch: patch
+  post: post
 };
 
 export default api;

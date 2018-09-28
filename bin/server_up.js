@@ -2,4 +2,4 @@
 var shell = require('shelljs');
 
 shell.echo('Running shell commands...')
-shell.exec('export GOOGLE_APPLICATION_CREDENTIALS=MyFirstProject-f27240d3a3f3.json && nodemon ./bin/www');
+shell.exec('export GOOGLE_APPLICATION_CREDENTIALS=diesel-skyline-216917-dbe6ae2f2dc6.json && nodemon ./bin/www');

@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import './App.css';
 
 import LeftNavBar from './components/left_navbar/LeftNavBar'
-import Orders from './components/orders_table/Orders'
+import Orders from './components/orders/Orders'
 
 class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+      currentView: "orders"
+    }
+  }
 
-  renderOrders = () => {
-    return (<Orders />);
+  _getView = (view) => {
+    this.setState = {
+      currentView: view
+    }
   }
 
   render() {
     return (
       <div className="body-container">
-        <Router>
-          <LeftNavBar />
-        </Router>
+          <LeftNavBar getView={this._getView}/>
         <div className="orders-container">
-          <Route path="/orders" render={this.renderOrders}/>
+          <Orders resource="orders" />
         </div>
       </div>
     );

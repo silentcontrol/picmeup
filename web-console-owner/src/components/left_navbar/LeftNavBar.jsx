@@ -17,20 +17,25 @@ const Title = () => {
   )
 }
 
-const LeftNavBar = () => (
-    <div className="left-navbar">
-      <SideNav highlightColor='#FFF' highlightBgColor='#E8386D' defaultSelected='orders'>
-        <Title/>
-        <Nav id='orders'>
-          <NavIcon><SvgIcon size={20} icon={ic_payment} /></NavIcon>
-          <NavText> Orders </NavText>
-        </Nav>
-        <Nav id='history'>
-          <NavIcon><SvgIcon size={20} icon={ic_history} /></NavIcon>
-          <NavText> History </NavText>
-        </Nav>
-      </SideNav>
-    </div>
-);
+const LeftNavBar = ({ getView }) => {
+
+  const _onClick = (e) => {
+    getView(e.target.id);
+  }
+
+  return(<div className="left-navbar">
+    <SideNav highlightColor='#FFF' highlightBgColor='#E8386D' defaultSelected='orders'>
+      <Title/>
+      <Nav id='orders' onClick={_onClick}>
+        <NavIcon><SvgIcon size={20} icon={ic_payment} /></NavIcon>
+        <NavText> Orders </NavText>
+      </Nav>
+      <Nav id='history' onClick={_onClick}>
+        <NavIcon><SvgIcon size={20} icon={ic_history} /></NavIcon>
+        <NavText> History </NavText>
+      </Nav>
+    </SideNav>
+  </div>)
+}
 
 export default LeftNavBar;

@@ -2,20 +2,6 @@ import React, { Component } from 'react';
 
 import OrderRow from './OrderRow';
 
-// const OrderRow = ({ order, getOrderId }) => {
-//   const _onClickHander = (e) => {
-//     getOrderId()
-//   }
-
-//   return (
-//     <tr id={order.id} onClick={_onClickHander}>
-//       <td>{order.id}</td>
-//       <td>{order.user_email}</td>
-//       <td className="last">${(order.total_cents / 100).toFixed(2)}</td>
-//     </tr>
-//   )
-// }
-
 export default class OrderBody extends Component {
   constructor(){
     super()

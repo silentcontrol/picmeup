@@ -22,13 +22,14 @@ router.get('/orders', async (req, res) => {
 
 /* GET order details by order ID */
 router.get('/orders/:id', async (req, res) => {
-  // 1 is a placeholder for orderId
-  res.json(await dbQuery.getOrderDetailsById(1))
+  const id = req.params.id;
+  res.json(await dbQuery.getOrderDetailsById(id))
 });
 
 /* POST order ID - mark order as complete */
 router.post('/orders/:id', async (req, res) => {
   // 2 is a placeholder for orderId
+  // const id = req.params.id;
   await dbInsert.completeOrder(2);
   res.sendStatus(200);
 });

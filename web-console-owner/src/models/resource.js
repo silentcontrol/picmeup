@@ -20,7 +20,7 @@ const Resource = (endpoint) => {
   }
 
   function update(id, data){
-    return api.patch(`/${endpoint}/${id}`, data)
+    return api.post(`/${endpoint}/${id}`, data)
   }
 
   return {

@@ -11,6 +11,7 @@
   padding: 1rem;
   line-height: 0;
   border-radius: 0.5rem;
+  height: 100%;
 }
 
 .orders-header{
@@ -35,19 +36,15 @@ tr:nth-child(even){
   background: #f2f2f2;
 }
 
-tr:hover td{
+table.table-orders tr:hover td{
   background: #d6cfe2;
 }
 
-td{
+table.table-orders td{
   padding: 0.25rem;
   border-right: 1pt #f2f2f2 solid;
   text-align: center;
   border-radius: 0.20rem;
-}
-
-td.span-all{
-  border-right: none;
 }
 
 .last{

@@ -1,0 +1,104 @@
+import React, { Component } from 'react';
+import OrderTable from './orders_table/OrderTable';
+import OrderInfo from './OrderInfo';
+
+import Resource from '../../models/resource';
+
+const Loading = () => {
+  return(
+    <h1>Loading</h1>
+  )
+}
+
+export default class Orders extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      orders: [],
+      loading: true,
+      showOrder: false,
+      currentOrderId: null,
+      orderDetails: null,
+      allOrders: Resource(this.props.resource)
+    }
+  }
+
+  componentDidMount(){
+    const AllOrders = this.state.allOrders
+    AllOrders.findAll()
+      .then(result => {
+        this.setState({
+          orders: result,
+          loading: false
+        })
+      })
+      .catch(error => {
+        console.error('Errors:', error)
+      })
+  }
+
+  _requestOrderDetails = () => {
+    const AllOrders = this.state.allOrders
+    AllOrders.find(this.state.currentOrderId)
+        .then(result =>{
+          console.log('_requestOrderDetails:', result)
+          this.setState({
+            orderDetails: result
+          })
+        }).catch(error => {
+          console.error(error);
+        })
+  }
+
+  _getOrderId = (id) => {
+    const AllOrders = this.state.allOrders
+    AllOrders.find(id)
+      .then(result => {
+        console.log('_getOrderId:', result)
+        this.setState({
+          currentOrderId: id,
+          showOrder: true,
+          orderDetails: result
+        })
+      }).catch(err => console.error(err))
+  }
+
+  _finishOrder = (id) => {
+    const AllOrders = this.state.allOrders
+    AllOrders.update(id)
+      .then(() => {
+        const unfinishedOrders = _removeOrder(this.state.orders, id);
+        this.setState({
+          orders: [...unfinishedOrders],
+          showOrder: false,
+          orderDetails: null
+        })
+      })
+      .catch(err => console.error('Error:', err));
+  }
+
+  render(){
+    const orderTable = this.state.loading ? (<Loading />) :
+      <OrderTable getOrderId={this._getOrderId} orders={this.state.orders} />
+    const orderDetails = (this.state.showOrder && !this.state.loading) ?
+                          (<OrderInfo order={this.state.orderDetails} finishOrder={this._finishOrder} />) :
+                          (null);
+    return(
+      <div>
+        <div className="orders-header">
+          <h1>Orders</h1>
+        </div>
+        <hr />
+        <div className="orders-content">
+          {orderTable}
+          {orderDetails}
+        </div>
+      </div>
+      )
+  }
+
+}
+
+const _removeOrder = (orders, id) => {
+  return orders.filter(order => order.id !== id);
+}
