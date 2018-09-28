@@ -1,3 +1,11 @@
+require('dotenv').config();
+
+var ENV = 'development';
+var knexConfig = require('../knexfile.js');
+var knex = require('knex')(knexConfig[ENV]);
+var dbQuery = require('../db/queryHelper')(knex);
+var dbInsert = require('../db/insertHelper')(knex);
+
 var express = require('express');
 const router = express.Router();
 var multer = require('multer');
@@ -13,7 +21,8 @@ router.get('/', (req, res) => {
 });
 
 /* GET list of products */
-router.get('/products', (req, res) => {
+router.get('/products', async (req, res) => {
+  await dbInsert.addProduct('hey you', 1000);
   res.json([{
     text: 'GET /products routing'
   }]);

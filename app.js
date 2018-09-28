@@ -1,3 +1,11 @@
+require('dotenv').config();
+
+var ENV = 'development';
+var knexConfig = require('./knexfile.js');
+var knex = require('knex')(knexConfig[ENV]);
+var dbQuery = require('./db/queryHelper')(knex);
+var dbInsert = require('./db/insertHelper')(knex);
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
