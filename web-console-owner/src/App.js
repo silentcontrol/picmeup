@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import LeftNavBar from './components/left_navbar/LeftNavBar'
-import Orders from './components/orders_table/OrdersTable'
+import Orders from './components/orders_table/Orders'
 
 class App extends Component {
   render() {

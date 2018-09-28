@@ -1,24 +1,26 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
 
-const OrderRow = ({ order }) => {
-  // on click, set orderinfo's show to true
-  const _onClickHandler = (e) => {
-    e.preventDefault()
-    alert("hello there");
-    console.log(e.target)
-    // window.location = `/orders/${e.target.id}`;
+export default class OrderRow extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      orderId: this.props.order.id
+    }
   }
 
-  return (
+  _onClickHandler = () => {
+    console.log(this.state.orderId)
+    this.props.getOrderId(this.state.orderId);
+  }
 
-    <tr id={order.id} onClick={_onClickHandler}>
-      <td>{order.id}</td>
-      <td>{order.user_email}</td>
-      <td className="last">${(order.total_cents / 100).toFixed(2)}</td>
-    </tr>
-
-  )
+  render(){
+    const order = this.props.order;
+    return(
+      <tr id={order.id} onClick={this._onClickHandler}>
+        <td>{order.id}</td>
+        <td>{order.user_email}</td>
+        <td className="last">${(order.total_cents / 100).toFixed(2)}</td>
+      </tr>
+    )
+  }
 }
-
-export default OrderRow;

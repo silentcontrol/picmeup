@@ -2,15 +2,30 @@
   width: 100%;
 }
 
+.orders-content{
+  display: flex;
+  flex-direction: row;
+}
+
+.order-details{
+  border: 2px solid #f2f2f2;
+  margin-left: 1.5rem;
+  margin-top: 1.5rem;
+  width: 40%;
+  padding: 1rem;
+  line-height: 0;
+  border-radius: 0.5rem;
+}
+
 .orders-header{
   padding: 0.5625rem 0.5625rem 0.5625rem 1.5rem;
 }
 
 .table-orders{
-  width: 90%;
+  width: 50%;
   margin-left: 1.5rem;
   margin-top: 1.5rem;
-  border: 1pt #f2f2f2 solid;
+  border: 2pt #f2f2f2 solid;
   border-radius: 0.5rem;
 }
 
@@ -32,6 +47,7 @@ td{
   padding: 0.25rem;
   border-right: 1pt #f2f2f2 solid;
   text-align: center;
+  border-radius: 0.20rem;
 }
 
 td.span-all{
