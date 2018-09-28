@@ -1,7 +1,3 @@
-.orders-container{
-  width: 100%;
-}
-
 .orders-content{
   display: flex;
   flex-direction: row;

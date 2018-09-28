@@ -63,7 +63,7 @@ export default class Orders extends Component {
                           (<OrderInfo order={this.state.orders[0]} />) :
                           (null);
     return(
-      <div className="orders-container">
+      <div>
         <div className="orders-header">
           <h1>Orders</h1>
         </div>
