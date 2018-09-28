@@ -17,7 +17,7 @@ function get(endpoint, data){
 }
 
 function patch(endpoint, data){
-  return server.patch(endpoing, data);
+  return server.patch(endpoint, data);
 }
 
 const api = {

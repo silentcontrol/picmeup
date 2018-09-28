@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
-import OrderTable from './OrderTable'
-import OrderInfo from './OrderInfo'
+import OrderTable from './OrderTable';
+import OrderInfo from './OrderInfo';
+
+import Resource from '../../models/resource';
+
+const AllOrders = Resource('orders');
 
 const Loading = () => {
   return(
@@ -11,8 +15,8 @@ const Loading = () => {
 }
 
 export default class Orders extends Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       orders: [],
       loading: true,
@@ -22,31 +26,40 @@ export default class Orders extends Component {
   }
 
   componentDidMount(){
-    this.setState({
-      orders: [
-        {
-          id: 1,
-          total_cents: 999,
-          user_email: 'kyla_yugi@yahoo.com'
-        },
-        {
-          id: 2,
-          total_cents: 1000,
-          user_email: 'kyla.palos@gmail.com'
-        },
-        {
-          id: 3,
-          total_cents: 999,
-          user_email: 'kyla_yugi@yahoo.com'
-        },
-        {
-          id: 4,
-          total_cents: 1000,
-          user_email: 'kyla.palos@gmail.com'
-        }
-      ],
-      loading: false
-    });
+    AllOrders.findAll()
+      .then(result => {
+        this.setState({
+          orders: result.data
+        })
+      })
+      .catch(error => {
+        console.error('Errors:', error)
+      })
+    // this.setState({
+    //   orders: [
+    //     {
+    //       id: 1,
+    //       total_cents: 999,
+    //       user_email: 'kyla_yugi@yahoo.com'
+    //     },
+    //     {
+    //       id: 2,
+    //       total_cents: 1000,
+    //       user_email: 'kyla.palos@gmail.com'
+    //     },
+    //     {
+    //       id: 3,
+    //       total_cents: 999,
+    //       user_email: 'kyla_yugi@yahoo.com'
+    //     },
+    //     {
+    //       id: 4,
+    //       total_cents: 1000,
+    //       user_email: 'kyla.palos@gmail.com'
+    //     }
+    //   ],
+    //   loading: false
+    // });
   }
 
   _getOrderId = (id) => {
