@@ -139,6 +139,10 @@ a {
   right: 20px;
   z-index: 2; }
 
+.react-html5-camera-photo > img,
+.react-html5-camera-photo > video {
+  width: auto !important; }
+
 .button__container {
   display: flex; }
 
