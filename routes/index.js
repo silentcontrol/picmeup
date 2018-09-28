@@ -29,7 +29,8 @@ router.get('/products', async (req, res) => {
 router.post('/search', async (req, res) => {
   // placeholder for serach query, actual search keyword should be come from req.body
   // APPLE is the placeholder for the serach keyword
-  res.json(await dbQuery.searchProductByName('APPLE'));
+  var userSearchTerm = req.body.product;
+  res.json(await dbQuery.searchProductByName(userSearchTerm));
 });
 
 /* POST order to server */
