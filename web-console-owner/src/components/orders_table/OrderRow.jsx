@@ -9,7 +9,6 @@ export default class OrderRow extends Component {
   }
 
   _onClickHandler = () => {
-    console.log(this.state.orderId)
     this.props.getOrderId(this.state.orderId);
   }
 
