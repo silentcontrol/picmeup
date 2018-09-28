@@ -21,50 +21,41 @@ export default class Orders extends Component {
       orders: [],
       loading: true,
       showOrder: false,
-      currentOrder: null
+      currentOrderId: null
     }
   }
 
   componentDidMount(){
     AllOrders.findAll()
       .then(result => {
+        console.log('result:' ,result)
         this.setState({
-          orders: result.data
+          orders: result,
+          loading: false
         })
       })
       .catch(error => {
         console.error('Errors:', error)
       })
-    // this.setState({
-    //   orders: [
-    //     {
-    //       id: 1,
-    //       total_cents: 999,
-    //       user_email: 'kyla_yugi@yahoo.com'
-    //     },
-    //     {
-    //       id: 2,
-    //       total_cents: 1000,
-    //       user_email: 'kyla.palos@gmail.com'
-    //     },
-    //     {
-    //       id: 3,
-    //       total_cents: 999,
-    //       user_email: 'kyla_yugi@yahoo.com'
-    //     },
-    //     {
-    //       id: 4,
-    //       total_cents: 1000,
-    //       user_email: 'kyla.palos@gmail.com'
-    //     }
-    //   ],
-    //   loading: false
-    // });
+  }
+
+  _getOrderFromState = () => {
+    const allOrders = this.state.orders;
+    let thisOrder = null;
+    for( let order of allOrders){
+      if (order.id === this.state.currentOrderId){
+        thisOrder = order;
+        break;
+      }
+    }
+
+    return thisOrder;
   }
 
   _getOrderId = (id) => {
+    console.log('_getOrderId:', id);
     this.setState({
-      currentOrder: this.state.orders[0],
+      currentOrderId: id,
       showOrder: true
     })
   }
@@ -73,7 +64,7 @@ export default class Orders extends Component {
     const orderTable = this.state.loading ? (<Loading />) :
       <OrderTable getOrderId={this._getOrderId} orders={this.state.orders} />
     const orderDetails = (this.state.showOrder && !this.state.loading) ?
-                          (<OrderInfo order={this.state.orders[0]} />) :
+                          (<OrderInfo order={this._getOrderFromState()} />) :
                           (null);
     return(
       <div>

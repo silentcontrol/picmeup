@@ -4,7 +4,9 @@ const Resource = (endpoint) => {
   function findAll(){
     return new Promise((resolve, reject) => {
       api.get(`/${ endpoint }`)
-        .then(result => resolve(result.data))
+        .then(result => {
+          resolve(result.data)
+        })
         .catch(errors => reject(errors))
     })
   }

@@ -18,8 +18,8 @@ export default class OrderRow extends Component {
     return(
       <tr id={order.id} onClick={this._onClickHandler}>
         <td>{order.id}</td>
-        <td>{order.user_email}</td>
-        <td className="last">${(order.total_cents / 100).toFixed(2)}</td>
+        <td>{order.email}</td>
+        <td className="last">${(order.order_total / 100).toFixed(2)}</td>
       </tr>
     )
   }
