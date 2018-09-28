@@ -40,7 +40,7 @@ a {
 
 .display {
   grid-column: center-start/center-end;
-  grid-template-rows: 0.1fr 0.8fr 0.1fr;
+  grid-template-rows: 0.8fr 0.2fr;
   grid-row: 1;
   display: grid;
   height: 100%;
@@ -81,6 +81,63 @@ a {
   width: auto;
   background: none;
   border: none; }
+
+#camera,
+#camera--view,
+#camera--sensor,
+#camera--output {
+  height: 100%;
+  width: 100%;
+  object-fit: cover; }
+
+#camera--view,
+#camera--sensor,
+#camera--output {
+  transform: scaleX(-1);
+  filter: FlipH; }
+
+#camera--trigger {
+  width: 200px;
+  background-color: #aa82f6;
+  color: white;
+  font-size: 16px;
+  border-radius: 30px;
+  border: none;
+  padding: 15px 20px;
+  text-align: center;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+  transform: translateX(-50%);
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transition: all 0.2s; }
+  #camera--trigger:hover {
+    cursor: pointer;
+    background-color: #7433f1; }
+
+#camera--submit__photo {
+  background-color: #aa82f6;
+  color: white;
+  font-size: 16px;
+  border-radius: 30px;
+  border: none;
+  padding: 15px 20px;
+  text-align: center;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.2s; }
+  #camera--submit__photo:hover {
+    cursor: pointer;
+    background-color: #7433f1; }
+
+.taken {
+  height: 100px !important;
+  width: 100px !important;
+  transition: all 0.5s ease-in;
+  border: solid 3px white;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+  top: 20px;
+  right: 20px;
+  z-index: 2; }
 
 .button__container {
   display: flex; }

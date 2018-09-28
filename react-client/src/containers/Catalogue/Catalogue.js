@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Display from "../../components/Display/Display";
+import CatalogueDisplay from "../../components/Display/CatalogueDisplay";
 import Navigation from "../../components/Navigation/Navigation";
 const Fragment = React.Fragment;
 
@@ -9,7 +9,7 @@ export default class Catalogue extends Component {
     console.log("Catalogue");
     return (
       <Fragment>
-        <Display />
+        <CatalogueDisplay />
         <Navigation activeButton={"catalogue"} />
       </Fragment>
     );
