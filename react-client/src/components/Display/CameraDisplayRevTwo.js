@@ -3,6 +3,8 @@ import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import axios from "axios";
 import Popup from "reactjs-popup";
+import PopupContainer from "./PopupContainer";
+// import QuantityContainer from "./QuantityContainer";
 var base64ToImage = require("base64-to-image");
 var fs = require("file-system");
 
@@ -39,7 +41,6 @@ export default class CameraDisplayRevTwo extends Component {
     console.log("takePhoto");
     console.log(dataUri);
     document.querySelector("#camera--output").src = dataUri;
-    //document.querySelector("#camera--output--inputBox").src = dataUri;
     this.setState({ selectedFile: dataUri });
   }
 
@@ -102,7 +103,6 @@ export default class CameraDisplayRevTwo extends Component {
       );
     } else if (this.state.result === "found") {
       const product = this.state.popupDisplayContent;
-      const { addToCart } = this.props;
       return (
         <div className="pop-up">
           <a className="close" onClick={this.closeModal}>
@@ -167,7 +167,6 @@ export default class CameraDisplayRevTwo extends Component {
   };
 
   openModal = () => {
-    console.log("openModal.");
     this.setState({ open: true });
   };
   closeModal = () => {
@@ -175,6 +174,14 @@ export default class CameraDisplayRevTwo extends Component {
   };
 
   render() {
+    const popup = this.state.popupDisplayContent ? (
+      <PopupContainer
+        open={this.state.open}
+        product={this.state.popupDisplayContent}
+        closeModal={this.closeModal}
+        addToCart={this.props.addToCart}
+      />
+    ) : null;
     return (
       <div className="display">
         <Camera
@@ -206,7 +213,14 @@ export default class CameraDisplayRevTwo extends Component {
           <button onClick={this.uploadHandler}>Upload!</button>
         </div>
 
-        <Popup
+        {popup}
+      </div>
+    );
+  }
+}
+
+/**
+ * <Popup
           open={this.state.open}
           modal
           onClose={this.closeModal}
@@ -219,7 +233,4 @@ export default class CameraDisplayRevTwo extends Component {
         >
           {this.renderPopup}
         </Popup>
-      </div>
-    );
-  }
-}
+ */
