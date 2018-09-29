@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import SpeechRecognition from "react-speech-recognition";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import SearchBar from "material-ui-search-bar";
-const Fragment = React.Fragment;
+import axios from "axios";
 
 class CatalogueDisplay extends Component {
   constructor(props) {

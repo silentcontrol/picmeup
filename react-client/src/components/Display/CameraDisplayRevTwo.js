@@ -25,7 +25,12 @@ function dataURLtoFile(dataurl, filename) {
 export default class CameraDisplayRevTwo extends Component {
   constructor(props) {
     super(props);
-    this.state = { selectedFile: null, open: false, result: null };
+    this.state = {
+      selectedFile: null,
+      open: false,
+      result: null,
+      popupDisplayContent: null
+    };
   }
 
   onTakePhoto(dataUri) {
@@ -87,20 +92,25 @@ export default class CameraDisplayRevTwo extends Component {
             </div>
           </div>
           <div className="pop-up__bottom-row">
-            <div className="button button__cancel">Cancel</div>
-            <div className="button button__cancel">Add</div>
+            <div className="button button__cancel" onClick={this.closeModal}>
+              Cancel
+            </div>
+            <div className="button button__add">Add</div>
           </div>
         </div>
       );
     } else if (this.state.result === "found") {
+      const product = this.state.popupDisplayContent;
       return (
         <div className="pop-up">
           <a className="close" onClick={this.closeModal}>
             &times;
           </a>
           <div className="pop-up__top-row">
-            <div className="pop-up__product-name">Found</div>
-            <div className="pop-up__product-price">$3.99</div>
+            <div className="pop-up__product-name">{product.product_name}</div>
+            <div className="pop-up__product-price">
+              ${product.price_in_cents / 100}
+            </div>
           </div>
           <div className="pop-up__middle-row">
             <div className="pop-up__label">qty</div>
@@ -111,8 +121,10 @@ export default class CameraDisplayRevTwo extends Component {
             </div>
           </div>
           <div className="pop-up__bottom-row">
-            <div className="button button__cancel">Cancel</div>
-            <div className="button button__cancel">Add</div>
+            <div className="button button__cancel" onClick={this.closeModal}>
+              Cancel
+            </div>
+            <div className="button button__add">Add</div>
           </div>
         </div>
       );
@@ -128,21 +140,24 @@ export default class CameraDisplayRevTwo extends Component {
 
     const formData = new FormData();
     formData.append("image", file);
-    axios
-      .post("/annotations", formData)
-      .then(result => {
-        console.log("result is,", result.data.type);
+    axios.post("/annotations", formData).then(result => {
+      console.log("result:", result);
+      if (result.data.type === "not found") {
+        this.setState({ open: true, result: "not found" });
+      } else if (result.data.type === "found") {
+        this.setState({
+          open: true,
+          result: "found",
+          popupDisplayContent: result.data.product[0]
+        });
+      }
+    });
+    // .then(result => {
+    //   console.log("result.data.type is,", result.data.type);
+    //   console.log("result.data is,", result.data);
 
-        return result.data.type;
-      })
-      .then(result => {
-        if (result === "not found") {
-          console.log(result);
-
-          this.setState({ open: true, result: "not found" });
-        } else if (result === "found") {
-        }
-      });
+    //   return result;
+    // })
   };
 
   openModal = () => {
@@ -188,6 +203,7 @@ export default class CameraDisplayRevTwo extends Component {
         <Popup
           open={this.state.open}
           modal
+          onClose={this.closeModal}
           closeOnDocumentClick
           contentStyle={{
             width: "auto",
