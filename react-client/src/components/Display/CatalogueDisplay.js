@@ -4,14 +4,6 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import SearchBar from "material-ui-search-bar";
 import axios from "axios";
 import PropTypes from "prop-types";
-import { withStyles } from "material-ui";
-import Table from "material-ui/Table/Table";
-import TableBody from "material-ui/Table/TableBody";
-import TableRowColumn from "material-ui/Table/TableRowColumn";
-import TableHeader from "material-ui/Table/TableHeader";
-import TableRow from "material-ui/Table/TableRow";
-import Paper from "material-ui";
-
 const styles = theme => ({
   root: {
     width: "100%",
@@ -24,24 +16,83 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
-];
 
 class CatalogueDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = { query: null };
   }
+
+  /*   listProducts = () => {
+    // list all products and their price
+    fetch("/products")
+      .then(dataWrappedByPromise => dataWrappedByPromise.json())
+      .then(productList => {
+        productList.forEach(product => {
+          var row = document.createElement("tr");
+          var dataName = document.createElement("td");
+          var dataPrice = document.createElement("td");
+
+          dataName.appendChild(document.createTextNode(product.product_name));
+          dataPrice.appendChild(
+            document.createTextNode(product.price_in_cents)
+          );
+
+          row.appendChild(dataName);
+          row.appendChild(dataPrice);
+
+          document.querySelector(".productlist").appendChild(row);
+        });
+      })
+      .catch(error => console.error(error));
+  }; */
+  setQuery = value => {
+    console.log(value);
+    this.setState({ query: value });
+  };
+  searchProduct = () => {
+    /*  var productName = document.getElementById("searchfield").value; */
+    var productName = this.state.query;
+
+    fetch("/search", {
+      method: "POST", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({ product: productName }) // body data type must match "Content-Type" header
+    })
+      .then(response => response.json())
+      .then(product => {
+        if (product.length === 0) {
+          alert("product cannot be found");
+        } else {
+          var productList = document.querySelector(".productlist");
+
+          // clear product list table
+          while (productList.firstChild) {
+            productList.removeChild(productList.firstChild);
+          }
+
+          var row = document.createElement("tr");
+          var dataName = document.createElement("td");
+          var dataPrice = document.createElement("td");
+
+          dataName.appendChild(
+            document.createTextNode(product[0].product_name)
+          );
+          dataPrice.appendChild(
+            document.createTextNode(product[0].price_in_cents)
+          );
+
+          row.appendChild(dataName);
+          row.appendChild(dataPrice);
+
+          productList.appendChild(row);
+        }
+      })
+      .catch(error => console.error(error));
+  };
+
   render() {
     const {
       transcript,
@@ -58,41 +109,30 @@ class CatalogueDisplay extends Component {
       <div className="display">
         <MuiThemeProvider>
           <SearchBar
-            onChange={() => console.log("onChange")}
-            onRequestSearch={() => console.log("onRequestSearch")}
+            onChange={value => {
+              console.log("onChange");
+              this.setQuery(value);
+            }}
+            onRequestSearch={() => {
+              console.log("onRequestSearch");
+              this.searchProduct();
+            }}
             style={{
               margin: "0 auto",
               maxWidth: 800
             }}
           />
-
-          <Table className="table">
-            <TableHeader>
-              <TableRow>
-                <TableRowColumn>Dessert (100g serving)</TableRowColumn>
-                <TableRowColumn numeric>Calories</TableRowColumn>
-                <TableRowColumn numeric>Fat (g)</TableRowColumn>
-                <TableRowColumn numeric>Carbs (g)</TableRowColumn>
-                <TableRowColumn numeric>Protein (g)</TableRowColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {rows.map(row => {
-                return (
-                  <TableRow key={row.id}>
-                    <TableRowColumn component="th" scope="row">
-                      {row.name}
-                    </TableRowColumn>
-                    <TableRowColumn numeric>{row.calories}</TableRowColumn>
-                    <TableRowColumn numeric>{row.fat}</TableRowColumn>
-                    <TableRowColumn numeric>{row.carbs}</TableRowColumn>
-                    <TableRowColumn numeric>{row.protein}</TableRowColumn>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
         </MuiThemeProvider>
+        <section className="product">
+          <table>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Price</th>
+            </tr>
+            <tbody className="productlist" />
+          </table>
+        </section>
+
         <div>
           <button onClick={resetTranscript}>Reset</button>
           <span>{transcript}</span>
