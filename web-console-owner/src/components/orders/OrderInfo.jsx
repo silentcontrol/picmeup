@@ -16,11 +16,15 @@ class OrderInfo extends Component{
 
   render(){
     const order = this.state.order;
+    const buttonDone = this.props.finishOrder ?
+      (<button id={order.id} onClick={this._onClick}>Done</button>) :
+      null;
+
     return(
       <div className="order-details">
         <h1>Order #{order[0].id}</h1>
         <ProductTable order={order} />
-        <button id={order.id} onClick={this._onClick}>Done</button>
+        {buttonDone}
       </div>
     )
   }

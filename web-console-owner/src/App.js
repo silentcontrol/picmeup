@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import './App.css';
 
@@ -23,10 +23,11 @@ class App extends Component {
   render() {
     return (
       <div className="body-container">
-          <LeftNavBar getView={this._getView}/>
-        <div className="orders-container">
-          <Orders resource="orders" />
-        </div>
+        <LeftNavBar/>
+          <div className="orders-container">
+            <Route exact path={"/orders"} component={()=><Orders resource="orders"/>}/>
+            <Route exact path={"/history"} component={()=><Orders resource="history"/>}/>
+          </div>
       </div>
     );
   }

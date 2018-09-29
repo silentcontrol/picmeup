@@ -77,12 +77,22 @@ export default class Orders extends Component {
       .catch(err => console.error('Error:', err));
   }
 
+  _renderOrderDetails = () => {
+    if (this.state.showOrder && !this.state.loading) {
+      return this.props.resource === 'orders' ?
+        (<OrderInfo order={this.state.orderDetails}
+          finishOrder={this._finishOrder} />) :
+        (<OrderInfo order={this.state.orderDetails}/>)
+    } else {
+      return null
+    }
+
+  }
+
   render(){
     const orderTable = this.state.loading ? (<Loading />) :
       <OrderTable getOrderId={this._getOrderId} orders={this.state.orders} />
-    const orderDetails = (this.state.showOrder && !this.state.loading) ?
-                          (<OrderInfo order={this.state.orderDetails} finishOrder={this._finishOrder} />) :
-                          (null);
+    const orderDetails = this._renderOrderDetails();
     return(
       <div>
         <div className="orders-header">
