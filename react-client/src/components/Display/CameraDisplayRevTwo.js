@@ -181,7 +181,14 @@ export default class CameraDisplayRevTwo extends Component {
         closeModal={this.closeModal}
         addToCart={this.props.addToCart}
       />
-    ) : null;
+    ) : (
+      <PopupContainer
+        open={this.state.open}
+        product={null}
+        closeModal={this.closeModal}
+        addToCart={this.props.addToCart}
+      />
+    );
     return (
       <div className="display">
         <Camera

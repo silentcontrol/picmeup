@@ -37,21 +37,31 @@ export default class PopupContainer extends Component {
     }
   };
 
-  render() {
-    const product = this.props.product ? this.props.product : null;
-    const quantity = this.state.quantity;
-    return (
-      <Popup
-        open={this.props.open}
-        modal
-        onClose={this.props.closeModal}
-        closeOnDocumentClick
-        contentStyle={{
-          width: "auto",
-          background: "none",
-          border: "none"
-        }}
-      >
+  renderPopup = () => {
+    if (!this.props.product) {
+      return (
+        <div className="pop-up">
+          <a className="close" onClick={this.props.closeModal}>
+            &times;
+          </a>
+          <div className="pop-up__top-row">
+            <div className="pop-up__product-name">Not Found</div>
+          </div>
+
+          <div className="pop-up__bottom-row">
+            <div
+              className="button button__cancel"
+              onClick={this.props.closeModal}
+            >
+              Cancel
+            </div>
+          </div>
+        </div>
+      );
+    } else if (this.props.product) {
+      const product = this.props.product ? this.props.product : null;
+      const quantity = this.state.quantity;
+      return (
         <div className="pop-up">
           <a className="close" onClick={this.props.closeModal}>
             &times;
@@ -92,6 +102,24 @@ export default class PopupContainer extends Component {
             </div>
           </div>
         </div>
+      );
+    }
+  };
+
+  render() {
+    return (
+      <Popup
+        open={this.props.open}
+        modal
+        onClose={this.props.closeModal}
+        closeOnDocumentClick
+        contentStyle={{
+          width: "auto",
+          background: "none",
+          border: "none"
+        }}
+      >
+        {this.renderPopup}
       </Popup>
     );
   }
