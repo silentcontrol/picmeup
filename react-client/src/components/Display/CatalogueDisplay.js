@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import SpeechRecognition from "react-speech-recognition";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import SearchBar from "material-ui-search-bar";
+const Fragment = React.Fragment;
 
 class CatalogueDisplay extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { query: null };
+  }
   render() {
     const {
       transcript,
@@ -15,8 +22,20 @@ class CatalogueDisplay extends Component {
 
     return (
       <div className="display">
-        <button onClick={resetTranscript}>Reset</button>
-        <span>{transcript}</span>
+        <MuiThemeProvider>
+          <SearchBar
+            onChange={() => console.log("onChange")}
+            onRequestSearch={() => console.log("onRequestSearch")}
+            style={{
+              margin: "0 auto",
+              maxWidth: 800
+            }}
+          />
+        </MuiThemeProvider>
+        <div>
+          <button onClick={resetTranscript}>Reset</button>
+          <span>{transcript}</span>
+        </div>
       </div>
     );
   }

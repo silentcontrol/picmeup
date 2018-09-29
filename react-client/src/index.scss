@@ -30,7 +30,6 @@ body {
 
 .container {
   display: grid;
-  height: 100vh;
   grid-template-columns: [full-start] 1fr [center-start] minmax(32rem, 48rem) [center-end] 1fr [full-end];
-  grid-template-rows: 85vh 15vh;
+  grid-template-rows: 80vh 15vh;
 }
