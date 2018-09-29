@@ -6,11 +6,11 @@ const Fragment = React.Fragment;
 
 export default class Camera extends Component {
   render() {
-    const {} = this.props;
+    const { addToCart } = this.props;
     console.log("Camera");
     return (
       <Fragment>
-        <CameraDisplayRevTwo />
+        <CameraDisplayRevTwo addToCart={addToCart} />
         <Navigation activeButton={"camera"} />
       </Fragment>
     );

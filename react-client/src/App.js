@@ -7,14 +7,21 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { cart: [] };
   }
-
+  addToCart = product => {
+    console.log("In App, addToCart");
+    console.log("product is,", product);
+  };
   render() {
     return (
       <Router>
         <div className="container">
-          <Route exact path={"/camera"} component={() => <Camera />} />
+          <Route
+            exact
+            path={"/camera"}
+            component={() => <Camera addToCart={this.addToCart} />}
+          />
           <Route exact path={"/catalogue"} component={() => <Catalogue />} />
           <Route
             exact

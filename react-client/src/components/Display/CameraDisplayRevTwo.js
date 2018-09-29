@@ -72,6 +72,7 @@ export default class CameraDisplayRevTwo extends Component {
       }
     });
   };
+
   renderPopup = () => {
     if (this.state.result === "not found") {
       return (
@@ -101,6 +102,7 @@ export default class CameraDisplayRevTwo extends Component {
       );
     } else if (this.state.result === "found") {
       const product = this.state.popupDisplayContent;
+      const { addToCart } = this.props;
       return (
         <div className="pop-up">
           <a className="close" onClick={this.closeModal}>
@@ -124,12 +126,22 @@ export default class CameraDisplayRevTwo extends Component {
             <div className="button button__cancel" onClick={this.closeModal}>
               Cancel
             </div>
-            <div className="button button__add">Add</div>
+            <div className="button button__add" onClick={this._addItemToCart}>
+              Add
+            </div>
           </div>
         </div>
       );
     }
   };
+
+  _addItemToCart = () => {
+    console.log("_addItemToCart.");
+    const { addToCart } = this.props;
+    addToCart(this.state.popupDisplayContent);
+    this.closeModal();
+  };
+
   uploadHandler = () => {
     console.log("uploadHandler is clicked.");
     console.log(this.state.selectedFile);
@@ -152,12 +164,6 @@ export default class CameraDisplayRevTwo extends Component {
         });
       }
     });
-    // .then(result => {
-    //   console.log("result.data.type is,", result.data.type);
-    //   console.log("result.data is,", result.data);
-
-    //   return result;
-    // })
   };
 
   openModal = () => {

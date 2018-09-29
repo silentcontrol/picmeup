@@ -71,6 +71,8 @@ router.post("/orders", async (req, res) => {
 /* POST image to server for google vision api annotations */
 router.post("/annotations", upload.single("image"), (req, res) => {
   const imageBuffer = req.file.buffer;
+  let allAnnotations = [];
+
   Promise.all([
     client.webDetection({
       image: {
@@ -79,17 +81,39 @@ router.post("/annotations", upload.single("image"), (req, res) => {
     })
   ])
     .then(results => {
-      res.json([
-        {
-          text: "POST /annotations",
-          webAnnotations: extractWebAnnotations(results[0])
-        }
-      ]);
+      const annotations = extractWebAnnotations(results[0]);
+      console.log("annotations:", annotations);
+
+      const allPromise = annotations.map(annotation => {
+        return Promise.resolve(
+          dbQuery.searchProductByName(annotation.description)
+        );
+      });
+
+      Promise.all(allPromise)
+        .then(result => {
+          console.log("result:", result);
+          const thisResult = result.filter(item => item.length > 0);
+          const type = thisResult.length > 0 ? "found" : "not found";
+          res.json({
+            product: thisResult[0],
+            type
+          });
+        })
+        .catch(err => res.sendStatus(500));
     })
+
     .catch(err => {
       console.error("Error:", err);
       res.sendStatus(500);
     });
+
+  // res.json([
+  //   {
+  //     text: "POST /annotations",
+  //     webAnnotations: extractWebAnnotations(results[0])
+  //   }
+  // ]);
 });
 
 module.exports = router;

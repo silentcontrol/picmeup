@@ -156,6 +156,9 @@ a {
 .button__container {
   display: flex; }
 
+.button:hover {
+  cursor: pointer; }
+
 *,
 *::before,
 *::after {
