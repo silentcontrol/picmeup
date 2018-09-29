@@ -40,7 +40,7 @@ router.post('/orders', async (req, res) => {
   var orderId = await dbInsert.addOrder(1);
 
   // placeholder for shopping cart items
-  // the actual order should come from the client 
+  // the actual order should come from the client
   var order = [
     { productId: 1, priceInCents: 25, quantity: 1 },
     { productId: 10, priceInCents: 450, quantity: 2 },
@@ -60,13 +60,14 @@ router.post('/orders', async (req, res) => {
 
   // add total value of order to orders table
   await dbInsert.addOrderTotal(orderId[0], orderTotal);
-  
+
   res.sendStatus(200);
 });
 
 /* POST image to server for google vision api annotations */
 router.post('/annotations', upload.single('image'), (req, res) => {
   const imageBuffer = req.file.buffer;
+  console.log(req.file);
   Promise.all([client.webDetection({
     image: {
       'content': imageBuffer
