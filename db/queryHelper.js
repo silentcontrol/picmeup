@@ -46,6 +46,13 @@ module.exports = function (knex) {
           .where('order_id', orderId)
           .column(['orders.id', 'product_name', 'line_items.price_in_cents', 'quantity', 'line_total', 'order_total', 'order_completed'])
           .then(res => res)
+    },
+    getUserByEmail: async (email) => {
+      return await
+        knex('users')
+          .where('email', email)
+          .column('email', 'password')
+          .then(res => res)
     }
   };
 }

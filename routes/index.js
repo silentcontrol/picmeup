@@ -11,6 +11,8 @@ const router = express.Router();
 var multer = require('multer');
 const { extractWebAnnotations, multerConfig } = require('./helpers.js');
 const upload = multer(multerConfig);
+const bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 
 const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient();
@@ -19,6 +21,70 @@ const client = new vision.ImageAnnotatorClient();
 router.get('/', (req, res) => {
   res.redirect('/products');
 });
+
+router.post('/login', async (req, res) => {
+  console.log('POST /login')
+  let user = await dbQuery.getUserByEmail(req.body.email).catch(err => {
+    console.error(err)
+    res.sendStatus(500)
+  })
+
+  user = user[0]
+
+  if (user && bcrypt.compareSync(req.body.password, user.password)) {
+    console.log("Found user")
+    const payload = {
+      loggedIn: true
+    }
+    var token = jwt.sign(payload, req.app.get('secret'), {
+      expiresIn: 60*60
+    })
+    res.json({
+      success: true,
+      message: 'token created',
+      token
+    })
+  } else {
+    res.send(400, "Email/Password is incorrect.")
+  }
+
+})
+
+router.post('/register', async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+  const hashedPassword = bcrypt.hashSync(password, 10)
+  const user = await dbInsert.addUser(firstName, lastName, email, hashedPassword)
+    .catch(err => {
+      console.error('Error in inserting new user to database:', err)
+    })
+
+  if (user) {
+    res.sendStatus(200)
+  } else {
+    res.send(400, 'Email already exists.')
+  }
+
+})
+
+router.use(function(req, res, next) {
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  if(token){
+    jwt.verify(token, req.app.get('secret'), function (err, decoded) {
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.' });
+      } else {
+        // if everything is good, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+      }
+    });
+  } else {
+    return res.status(403).send({
+      success: false,
+      message: 'No token provided.'
+    })
+  }
+})
 
 /* GET all products */
 router.get('/products', async (req, res) => {
