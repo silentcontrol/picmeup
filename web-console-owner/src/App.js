@@ -25,7 +25,7 @@ class App extends Component {
       <div className="body-container">
         <LeftNavBar/>
           <div className="orders-container">
-            <Route exact path={"/orders"} component={()=><Orders resource="orders"/>}/>
+            <Route path={"/orders"} component={()=><Orders resource="orders"/>}/>
             <Route exact path={"/history"} component={()=><Orders resource="history"/>}/>
           </div>
       </div>
