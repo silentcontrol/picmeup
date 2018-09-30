@@ -170,7 +170,7 @@ export default class CameraDisplayRevTwo extends Component {
     this.setState({ open: true });
   };
   closeModal = () => {
-    this.setState({ open: false });
+    this.setState({ open: false, popupDisplayContent: null });
   };
 
   render() {

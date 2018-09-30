@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Camera from "./containers/Camera/Camera";
+import Home from "./containers/Home/Home";
 import Catalogue from "./containers/Catalogue/Catalogue";
 import ShoppingCart from "./containers/ShoppingCart/ShoppingCart";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -20,6 +21,7 @@ export default class App extends Component {
     return (
       <Router>
         <div className="container">
+          <Route exact path={"/"} component={() => <Home />} />
           <Route
             exact
             path={"/camera"}

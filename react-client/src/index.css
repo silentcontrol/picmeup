@@ -86,6 +86,14 @@ a {
   .pop-up__label {
     font-size: 4rem;
     text-transform: uppercase; }
+  .pop-up__signin {
+    display: grid;
+    width: 30rem;
+    position: absolute;
+    top: -2000%;
+    left: -1500%;
+    grid-template-rows: min-content 1fr min-content;
+    background-color: white; }
 
 .popup-content {
   width: auto;
