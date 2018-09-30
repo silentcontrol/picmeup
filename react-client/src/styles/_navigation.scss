@@ -6,6 +6,10 @@
   text-align: center;
   align-items: center;
   background-color: #7433f1;
+
+  &__home {
+    display: initial;
+  }
 }
 
 .catalogue,

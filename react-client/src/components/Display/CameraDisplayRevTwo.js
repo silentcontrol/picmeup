@@ -144,16 +144,11 @@ export default class CameraDisplayRevTwo extends Component {
 
   uploadHandler = () => {
     console.log("uploadHandler is clicked.");
-    console.log(this.state.selectedFile);
-
     var file = dataURLtoFile(this.state.selectedFile, "hello.jpeg");
-
-    console.log("file is,", file);
 
     const formData = new FormData();
     formData.append("image", file);
     axios.post("/annotations", formData).then(result => {
-      console.log("result:", result);
       if (result.data.type === "not found") {
         this.setState({ open: true, result: "not found" });
       } else if (result.data.type === "found") {

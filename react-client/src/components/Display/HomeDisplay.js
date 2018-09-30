@@ -23,6 +23,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
+import axios from "axios";
+
 import classNames from "classnames";
 
 class HomeDisplay extends Component {
@@ -31,12 +33,43 @@ class HomeDisplay extends Component {
     this.state = {
       amount: "",
       password: "",
+      email: "",
       weight: "",
       weightRange: "",
       showPassword: false,
       open: false
     };
   }
+
+  componentDidMount() {
+    fetch("/products")
+      .then(dataWrappedByPromise => {
+        console.log(dataWrappedByPromise);
+        return dataWrappedByPromise.json();
+      })
+      .then(productList => {
+        productList.slice(9).forEach(product => {
+          var row = document.createElement("tr");
+          var dataName = document.createElement("td");
+          var dataPrice = document.createElement("td");
+
+          dataName.appendChild(document.createTextNode(product.product_name));
+          const price = `\$${(product.price_in_cents / 100).toFixed(2)}`;
+          dataPrice.appendChild(document.createTextNode(price));
+
+          row.appendChild(dataName);
+          row.appendChild(dataPrice);
+          row.setAttribute("id", product.id);
+          row.onclick = () => {
+            this._getProductInfo(product);
+          };
+
+          document.querySelector(".productlist").appendChild(row);
+        });
+      })
+      .catch(error => console.error(error));
+  }
+
   handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
   };
@@ -44,6 +77,25 @@ class HomeDisplay extends Component {
   handleClickShowPassword = () => {
     this.setState(state => ({ showPassword: !state.showPassword }));
   };
+
+  userSignIn = () => {
+    console.log("userSignIn");
+    console.log("email is,", this.state.email);
+    console.log("password is,", this.state.password);
+
+    axios
+      .post("/login", {
+        email: this.state.email,
+        password: this.state.password
+      })
+      .then(function(response) {
+        console.log(response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
   openModal = () => {
     this.setState({ open: true });
   };
@@ -54,7 +106,7 @@ class HomeDisplay extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className="display">
+      <div className="display display__home">
         <Button
           variant="contained"
           color="primary"
@@ -63,6 +115,8 @@ class HomeDisplay extends Component {
         >
           Sign In
         </Button>
+
+        <h1 className="header__primary">Welcome.</h1>
         <Popup
           open={this.state.open}
           modal
@@ -87,21 +141,13 @@ class HomeDisplay extends Component {
                 className={classes.margin}
                 style={{ position: "initial", padding: "1rem" }}
               >
-                {/* <Input
-                  id="input-with-icon-username"
-                  defaultValue="Enter Your Username"
-                  startAdornment={
-                    <InputAdornment position="end">
-                      <AccountCircle />
-                    </InputAdornment>
-                  }
-                /> */}
                 <FormControl
                   className={classNames(classes.margin, classes.textField)}
                 >
-                  <InputLabel htmlFor="adornment-username">Username</InputLabel>
+                  <InputLabel htmlFor="adornment-email">Email</InputLabel>
                   <Input
-                    id="adornment-username"
+                    id="adornment-email"
+                    onChange={this.handleChange("email")}
                     endAdornment={
                       <InputAdornment position="end">
                         <AccountCircle style={{ marginRight: "1.2rem" }} />
@@ -134,24 +180,22 @@ class HomeDisplay extends Component {
                     }
                   />
                 </FormControl>
-
-                {/* <Input
-                  id="input-with-icon-password"
-                  defaultValue="Enter Your Password"
-                  startAdornment={
-                    <InputAdornment position="start">
-                      <Lock />
-                    </InputAdornment>
-                  }
-                /> */}
               </FormControl>
               <Button
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                onClick={event => this.handleClick(event)}
+                onClick={event => this.userSignIn(event)}
               >
                 Submit
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                onClick={event => this.handleClick(event)}
+              >
+                Register
               </Button>
             </div>
           </MuiThemeProvider>

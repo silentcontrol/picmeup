@@ -6,6 +6,8 @@
   text-align: center;
   align-items: center;
   background-color: #7433f1; }
+  .navigation__home {
+    display: initial; }
 
 .catalogue,
 .camera,
@@ -47,6 +49,9 @@ a {
   border-right: 0.5rem solid #7433f1;
   justify-items: center;
   overflow: hidden; }
+  .display__home {
+    grid-row: 1 / span 2;
+    border-bottom: 0.5rem solid #7433f1; }
 
 .react-html5-camera-photo {
   display: grid;

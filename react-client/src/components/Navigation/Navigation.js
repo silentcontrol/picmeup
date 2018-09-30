@@ -14,7 +14,7 @@ const Navigation = ({ activeButton }) => {
     switch (activeButton) {
       case "camera":
         return (
-          <Fragment>
+          <section className="navigation">
             <div className="camera active">
               <div className="header__secondary">Cam</div>
             </div>
@@ -24,12 +24,12 @@ const Navigation = ({ activeButton }) => {
             <Link to={shoppingcartPage__URL} className="shopping-cart">
               <div className="header__secondary">Cart</div>
             </Link>
-          </Fragment>
+          </section>
         );
         break;
       case "catalogue":
         return (
-          <Fragment>
+          <section className="navigation">
             <Link to={cameraPage__URL} className="camera">
               <div className="header__secondary">Cam</div>
             </Link>
@@ -39,12 +39,12 @@ const Navigation = ({ activeButton }) => {
             <Link to={shoppingcartPage__URL} className="shopping-cart">
               <div className="header__secondary">Cart</div>
             </Link>
-          </Fragment>
+          </section>
         );
         break;
       case "shopping-cart":
         return (
-          <Fragment>
+          <section className="navigation">
             <Link to={cameraPage__URL} className="camera">
               <div className="header__secondary">Cam</div>
             </Link>
@@ -54,7 +54,7 @@ const Navigation = ({ activeButton }) => {
             <div className="shopping-cart active">
               <div className="header__secondary">Cart</div>
             </div>
-          </Fragment>
+          </section>
         );
         break;
       default:
@@ -62,7 +62,7 @@ const Navigation = ({ activeButton }) => {
     }
   };
 
-  return <section className="navigation">{currentNavLayout()}</section>;
+  return <Fragment>{currentNavLayout()}</Fragment>;
 };
 
 export default Navigation;
