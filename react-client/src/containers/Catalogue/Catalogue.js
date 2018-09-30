@@ -5,11 +5,11 @@ const Fragment = React.Fragment;
 
 export default class Catalogue extends Component {
   render() {
-    const {} = this.props;
+    const { addToCart } = this.props;
     console.log("Catalogue");
     return (
       <Fragment>
-        <CatalogueDisplay />
+        <CatalogueDisplay addToCart={addToCart} />
         <Navigation activeButton={"catalogue"} />
       </Fragment>
     );

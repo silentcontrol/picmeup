@@ -22,7 +22,11 @@ export default class App extends Component {
             path={"/camera"}
             component={() => <Camera addToCart={this.addToCart} />}
           />
-          <Route exact path={"/catalogue"} component={() => <Catalogue />} />
+          <Route
+            exact
+            path={"/catalogue"}
+            component={() => <Catalogue addToCart={this.addToCart} />}
+          />
           <Route
             exact
             path={"/shoppingcart"}
