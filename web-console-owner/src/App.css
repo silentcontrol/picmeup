@@ -1,0 +1,9 @@
+.body-container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.orders-container{
+  width: 100%;
+}

@@ -22,14 +22,16 @@ router.get('/orders', async (req, res) => {
 
 /* GET order details by order ID */
 router.get('/orders/:id', async (req, res) => {
-  // 1 is a placeholder for orderId
-  res.json(await dbQuery.getOrderDetailsById(1))
+  const id = req.params.id;
+  res.json(await dbQuery.getOrderDetailsById(id))
 });
 
 /* POST order ID - mark order as complete */
 router.post('/orders/:id', async (req, res) => {
   // 2 is a placeholder for orderId
-  await dbInsert.completeOrder(2);
+  // const id = req.params.id;
+  const id = req.params.id;
+  await dbInsert.completeOrder(id);
   res.sendStatus(200);
 });
 
@@ -38,10 +40,10 @@ router.get('/history', async (req, res) => {
   res.json(await dbQuery.getClosedOrders())
 });
 
-// router.post('/search', (req, res) => {
-//   res.json([{
-//     text: 'GET /search'
-//   }])
-// });
+/* GET details of closed order with order ID */
+router.get('/history/:id', async (req, res) => {
+  const id = req.params.id;
+  res.json(await dbQuery.getOrderDetailsById(id))
+})
 
 module.exports = router;
