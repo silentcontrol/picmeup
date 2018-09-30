@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import Display from "../../components/Display/Display";
+import CartDisplay from "../../components/Display/CartDisplay";
 import Navigation from "../../components/Navigation/Navigation";
 const Fragment = React.Fragment;
 
 export default class ShoppingCart extends Component {
   render() {
-    const {} = this.props;
+    const { cart } = this.props;
     console.log("ShoppingCart");
     return (
       <Fragment>
-        <Display />
+        <CartDisplay cart={cart} />
         <Navigation activeButton={"shopping-cart"} />
       </Fragment>
     );

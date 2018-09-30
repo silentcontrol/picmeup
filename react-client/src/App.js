@@ -9,10 +9,13 @@ export default class App extends Component {
     super(props);
     this.state = { cart: [] };
   }
+
   addToCart = product => {
-    console.log("In App, addToCart");
-    console.log("product is,", product);
+    const updatedCart = this.state.cart;
+    updatedCart.push(product);
+    this.setState({ cart: updatedCart });
   };
+
   render() {
     return (
       <Router>
@@ -25,12 +28,14 @@ export default class App extends Component {
           <Route
             exact
             path={"/catalogue"}
-            component={() => <Catalogue addToCart={this.addToCart} />}
+            component={() => (
+              <Catalogue addToCart={this.addToCart} cart={this.state.cart} />
+            )}
           />
           <Route
             exact
             path={"/shoppingcart"}
-            component={() => <ShoppingCart />}
+            component={() => <ShoppingCart cart={this.state.cart} />}
           />
         </div>
       </Router>
