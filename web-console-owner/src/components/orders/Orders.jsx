@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import OrderTable from './orders_table/OrderTable';
-import OrderInfo from './OrderInfo';
+import OrderInfo from './products_table/OrderInfo';
+import Loading from './loading/Loading'
+import Headers from './headers/Headers'
 
 import Resource from '../../models/resource';
-
-const Loading = () => {
-  return(
-    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-  )
-}
 
 export default class Orders extends Component {
   constructor(props){
@@ -93,12 +89,10 @@ export default class Orders extends Component {
     const orderTable = this.state.loading ? (<Loading />) :
       <OrderTable getOrderId={this._getOrderId} orders={this.state.orders} />
     const orderDetails = this._renderOrderDetails();
+    const orderHeader = <Headers resource={this.props.resource} />
     return(
       <div>
-        <div className="orders-header">
-          <h1>Orders</h1>
-        </div>
-        <hr />
+        {orderHeader}
         <div className="orders-content">
           {orderTable}
           {orderDetails}

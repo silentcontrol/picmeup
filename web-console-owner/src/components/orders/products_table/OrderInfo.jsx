@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProductTable from './products_table/ProductTable';
+import ProductTable from './ProductTable';
 
 class OrderInfo extends Component{
   constructor(props){

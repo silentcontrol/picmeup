@@ -46,4 +46,9 @@ router.get('/history/:id', async (req, res) => {
   res.json(await dbQuery.getOrderDetailsById(id))
 })
 
+router.get('/search/:id', async (req, res) => {
+  const id = req.params.id;
+  res.json(await dbQuery.getOrderDetailsById(id))
+})
+
 module.exports = router;
