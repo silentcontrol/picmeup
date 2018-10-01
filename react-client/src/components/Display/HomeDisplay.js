@@ -1,11 +1,14 @@
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Button from "@material-ui/core/Button";
 import React, { Component } from "react";
+import { Redirect, BrowserRouter } from "react-router";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Popup from "reactjs-popup";
+
+import createHistory from "history/createBrowserHistory";
 
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -31,7 +34,8 @@ class HomeDisplay extends Component {
       weight: "",
       weightRange: "",
       showPassword: false,
-      open: false
+      open: false,
+      redirect: false
     };
   }
 
@@ -82,14 +86,10 @@ class HomeDisplay extends Component {
         email: this.state.email,
         password: this.state.password
       })
-      .then(function(response) {
+      .then(response => {
         console.log(response.data);
         document.cookie = response.data.token;
-
-        if (document.cookie) {
-          console.log(document.cookie);
-          return <Redirect to="/catalogue" />;
-        }
+        this.setState({ redirect: true });
       })
       .catch(function(error) {
         console.log(error);
@@ -105,6 +105,12 @@ class HomeDisplay extends Component {
 
   render() {
     const { classes } = this.props;
+
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to="/catalogue" />;
+    }
     return (
       <div className="display display__home">
         <Button
