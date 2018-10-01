@@ -1,64 +1,62 @@
 import React, { Component } from "react";
-import SpeechRecognition from "react-speech-recognition";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import SearchBar from "material-ui-search-bar";
-import axios from "axios";
-import PropTypes from "prop-types";
 import PopupContainer from "./PopupContainer";
-const styles = theme => ({
-  root: {
-    width: "100%",
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
-  },
-  table: {
-    minWidth: 700
-  }
-});
 
-let id = 0;
+const TableRow = ({ product, getProductInfo }) => {
+  const price = `\$${(product.price_in_cents / 100).toFixed(2)}`;
 
+  return (
+    <tr onClick={() => getProductInfo(product)}>
+      <td>{product.id}</td>
+      <td>{product.product_name}</td>
+      <td>{price}</td>
+    </tr>
+  );
+};
 class CatalogueDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
       query: null,
       showPopup: false,
-      chosenProduct: null
+      chosenProduct: null,
+      allProducts: null
     };
   }
-
   componentDidMount() {
-    fetch("/products")
+    fetch("/products", {
+      headers: new Headers({
+        "x-access-token": document.cookie,
+        "Content-Type": "application/x-www-form-urlencoded"
+      })
+    })
       .then(dataWrappedByPromise => {
-        console.log(dataWrappedByPromise);
+        console.log("dataWrappedByPromise", dataWrappedByPromise);
         return dataWrappedByPromise.json();
       })
       .then(productList => {
-        productList.forEach(product => {
-          var row = document.createElement("tr");
-          var dataName = document.createElement("td");
-          var dataPrice = document.createElement("td");
-
-          dataName.appendChild(document.createTextNode(product.product_name));
-          const price = `\$${(product.price_in_cents / 100).toFixed(2)}`;
-          dataPrice.appendChild(document.createTextNode(price));
-
-          row.appendChild(dataName);
-          row.appendChild(dataPrice);
-          row.setAttribute("id", product.id);
-          row.onclick = () => {
-            this._getProductInfo(product);
-          };
-
-          document.querySelector(".productlist").appendChild(row);
-        });
+        console.log(productList);
+        this.setState({ allProducts: productList });
       })
       .catch(error => console.error(error));
   }
 
+  _generateTableRow = () => {
+    return this.state.allProducts.map(product => {
+      return (
+        <TableRow
+          getProductInfo={this._getProductInfo}
+          key={product.id}
+          product={product}
+        />
+      );
+    });
+  };
+
   _getProductInfo = product => {
     console.log("row clicked");
+    console.log(product);
     this.setState({
       showPopup: true,
       chosenProduct: product
@@ -76,6 +74,7 @@ class CatalogueDisplay extends Component {
     fetch("/search", {
       method: "POST",
       headers: {
+        "x-access-token": document.cookie,
         "Content-Type": "application/json; charset=utf-8"
       },
       body: JSON.stringify({ product: productName }) // body data type must match "Content-Type" header
@@ -105,7 +104,7 @@ class CatalogueDisplay extends Component {
 
           row.appendChild(dataName);
           row.appendChild(dataPrice);
-          row.setAttribute("id", product.id);
+
           console.log("inside search product, product is:", product[0]);
           row.onclick = () => {
             this._getProductInfo(product[0]);
@@ -125,16 +124,7 @@ class CatalogueDisplay extends Component {
   };
 
   render() {
-    const {
-      transcript,
-      resetTranscript,
-      browserSupportsSpeechRecognition,
-      classes
-    } = this.props;
-
-    if (!browserSupportsSpeechRecognition) {
-      return null;
-    }
+    const {} = this.props;
 
     const popup = this.state.showPopup ? (
       <PopupContainer
@@ -144,6 +134,10 @@ class CatalogueDisplay extends Component {
         addToCart={this.props.addToCart}
       />
     ) : null;
+
+    const renderProductList = this.state.allProducts
+      ? this._generateTableRow()
+      : null;
 
     return (
       <div className="display">
@@ -171,14 +165,9 @@ class CatalogueDisplay extends Component {
                 <th scope="col">Price</th>
               </tr>
             </thead>
-            <tbody className="productlist" />
+            <tbody className="productlist"> {renderProductList}</tbody>
           </table>
         </section>
-
-        <div>
-          <button onClick={resetTranscript}>Reset</button>
-          <span>{transcript}</span>
-        </div>
 
         {popup}
       </div>
@@ -186,4 +175,4 @@ class CatalogueDisplay extends Component {
   }
 }
 
-export default SpeechRecognition(CatalogueDisplay);
+export default CatalogueDisplay;

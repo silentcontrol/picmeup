@@ -26,7 +26,6 @@ const Navigation = ({ activeButton }) => {
             </Link>
           </section>
         );
-        break;
       case "catalogue":
         return (
           <section className="navigation">
@@ -41,7 +40,6 @@ const Navigation = ({ activeButton }) => {
             </Link>
           </section>
         );
-        break;
       case "shopping-cart":
         return (
           <section className="navigation">
@@ -56,7 +54,6 @@ const Navigation = ({ activeButton }) => {
             </div>
           </section>
         );
-        break;
       default:
         break;
     }

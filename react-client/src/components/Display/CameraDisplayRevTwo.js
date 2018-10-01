@@ -72,6 +72,13 @@ export default class CameraDisplayRevTwo extends Component {
         console.log(progressEvent.loaded / progressEvent.total);
       }
     });
+    // axios({
+    //   url: "/annotations",
+    //   data: formData,
+    //   headers: {
+    //     token: document.cookie
+    //   }
+    // });
   };
 
   renderPopup = () => {
@@ -148,17 +155,23 @@ export default class CameraDisplayRevTwo extends Component {
 
     const formData = new FormData();
     formData.append("image", file);
-    axios.post("/annotations", formData).then(result => {
-      if (result.data.type === "not found") {
-        this.setState({ open: true, result: "not found" });
-      } else if (result.data.type === "found") {
-        this.setState({
-          open: true,
-          result: "found",
-          popupDisplayContent: result.data.product[0]
-        });
-      }
-    });
+    axios
+      .post("/annotations", formData, {
+        headers: {
+          "x-access-token": document.cookie
+        }
+      })
+      .then(result => {
+        if (result.data.type === "not found") {
+          this.setState({ open: true, result: "not found" });
+        } else if (result.data.type === "found") {
+          this.setState({
+            open: true,
+            result: "found",
+            popupDisplayContent: result.data.product[0]
+          });
+        }
+      });
   };
 
   openModal = () => {

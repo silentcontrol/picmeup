@@ -14,62 +14,76 @@ const styles = theme => ({
   }
 });
 
+const TableRow = ({ cartItem, deleteItem }) => {
+  const { product, quantity } = cartItem;
+  const price = (product.price_in_cents / 100).toFixed(2);
+
+  return (
+    <tr>
+      <td>{product.product_name}</td>
+      <td>{`\$${price}`}</td>
+      <td>{quantity}</td>
+      <td>{(price * quantity).toFixed(2)}</td>
+      <td>
+        <button onClick={() => deleteItem(product)}>Remove Item</button>
+      </td>
+    </tr>
+  );
+};
+
 class CartDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
       query: null,
       showPopup: false,
-      chosenProduct: null
+      chosenProduct: null,
+      currentCart: [],
+      loading: true
     };
   }
 
   componentDidMount() {
-    const { cart } = this.props;
-    cart.forEach(item => {
-      var row = document.createElement("tr");
-      var dataName = document.createElement("td");
-      var dataPrice = document.createElement("td");
-      var dataQty = document.createElement("td");
-      var dataLineTotal = document.createElement("td");
-
-      dataName.appendChild(document.createTextNode(item.product.product_name));
-      const price = (item.product.price_in_cents / 100).toFixed(2);
-      console.log("price:", price);
-      console.log("quantity:", item.quantity);
-      dataPrice.appendChild(document.createTextNode(`\$${price}`));
-      dataQty.appendChild(document.createTextNode(item.quantity));
-      dataLineTotal.appendChild(
-        document.createTextNode(`\$${price * item.quantity}`)
-      );
-
-      row.appendChild(dataName);
-      row.appendChild(dataPrice);
-      row.appendChild(dataQty);
-      row.appendChild(dataLineTotal);
-      row.setAttribute("id", item.product.id);
-      row.onclick = () => {
-        this._getProductInfo(item);
-      };
-
-      document.querySelector(".productlist").appendChild(row);
+    this.setState({
+      currentCart: this.props.cart,
+      loading: false
     });
   }
 
   _submitOrder = () => {
     const { cart } = this.props;
+    if (cart.length > 0) {
+      axios({
+        url: "/orders",
+        method: "POST",
+        headers: {
+          "x-access-token": document.cookie
+        },
+        data: {
+          orders: cart,
+          user_ID: 2
+        }
+      })
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  };
 
-    axios
-      .post("/orders", {
-        orders: cart,
-        user_ID: 2
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+  _deleteItem = cartItem => {
+    console.log("deleteItem cartItem", cartItem);
+    const { currentCart } = this.state;
+    console.log("currentCart", currentCart);
+    const newCart = currentCart.filter(
+      item => item.product.product_name !== cartItem.product_name
+    );
+    console.log("newcart", newCart);
+    this.setState({
+      currentCart: newCart
+    });
   };
 
   _closeModal = () => {
@@ -80,25 +94,29 @@ class CartDisplay extends Component {
   };
 
   render() {
-    const {
-      transcript,
-      resetTranscript,
-      browserSupportsSpeechRecognition,
-      cart
-    } = this.props;
+    const tableRows = this.state.loading
+      ? null
+      : this.state.currentCart.map(cartItem => {
+          return (
+            <TableRow
+              key={cartItem.product.id}
+              cartItem={cartItem}
+              deleteItem={this._deleteItem}
+            />
+          );
+        });
 
-    if (!browserSupportsSpeechRecognition) {
-      return null;
-    }
-
-    const popup = this.state.showPopup ? (
+    /**
+     * const popup = this.state.showPopup ? (
       <PopupContainer
         open={this.state.showPopup}
         product={this.state.chosenProduct}
         closeModal={this._closeModal}
       />
     ) : null;
-    console.log("cart is", cart);
+     */
+
+    // console.log("cart is", currentCart);
     return (
       <div className="display">
         <section className="product">
@@ -109,9 +127,10 @@ class CartDisplay extends Component {
                 <th scope="col">Price</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Unit Total</th>
+                <th scope="col" />
               </tr>
             </thead>
-            <tbody className="productlist" />
+            <tbody className="productlist">{tableRows}</tbody>
           </table>
         </section>
         <button className="button button__submit" onClick={this._submitOrder}>

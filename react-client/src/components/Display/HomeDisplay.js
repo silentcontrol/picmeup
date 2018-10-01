@@ -1,7 +1,6 @@
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Button from "@material-ui/core/Button";
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,14 +11,9 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import Lock from "@material-ui/icons/Lock";
 
 import IconButton from "@material-ui/core/IconButton";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import MenuItem from "@material-ui/core/MenuItem";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
@@ -89,7 +83,13 @@ class HomeDisplay extends Component {
         password: this.state.password
       })
       .then(function(response) {
-        console.log(response);
+        console.log(response.data);
+        document.cookie = response.data.token;
+
+        if (document.cookie) {
+          console.log(document.cookie);
+          return <Redirect to="/catalogue" />;
+        }
       })
       .catch(function(error) {
         console.log(error);

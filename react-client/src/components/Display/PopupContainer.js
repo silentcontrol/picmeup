@@ -69,7 +69,7 @@ export default class PopupContainer extends Component {
           <div className="pop-up__top-row">
             <div className="pop-up__product-name">{product.product_name}</div>
             <div className="pop-up__product-price">
-              ${product.price_in_cents / 100}
+              ${(product.price_in_cents / 100).toFixed(2)}
             </div>
           </div>
           <div className="pop-up__middle-row">
