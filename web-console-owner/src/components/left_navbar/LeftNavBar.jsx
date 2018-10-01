@@ -24,7 +24,7 @@ const LeftNavBar = ({ getView }) => {
   }
 
   return(<div className="left-navbar">
-    <SideNav highlightColor='#FFF' highlightBgColor='#E8386D' defaultSelected='orders'>
+    <SideNav highlightColor='#FFF' highlightBgColor='#E8386D'>
       <Title/>
       <Nav id='orders' onClick={_onClick}>
         <NavIcon><SvgIcon size={20} icon={ic_payment} /></NavIcon>

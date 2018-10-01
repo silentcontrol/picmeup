@@ -6,7 +6,7 @@ import Resource from '../../models/resource';
 
 const Loading = () => {
   return(
-    <h1>Loading</h1>
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   )
 }
 
