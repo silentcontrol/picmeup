@@ -1,13 +1,77 @@
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
+import {
+  Input,
+  InputLabel,
+  InputAdornment,
+  FormControl,
+  IconButton,
+  ListItem,
+  List,
+  TextField,
+  Typography,
+  Toolbar,
+  AppBar,
+  Button,
+  Paper,
+  Grid,
+  withStyles,
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardActionArea,
+  Icon,
+  Snackbar,
+  SnackbarContent
+} from "@material-ui/core";
 
-export default class PopupContainer extends Component {
+import red from "@material-ui/core/colors/red";
+import { Add, Navigation, AddShoppingCart } from "@material-ui/icons";
+
+const styles = theme => ({
+  card: {
+    width: "100%"
+  },
+  media: {
+    // ⚠️ object-fit is not supported by IE11.
+    objectFit: "cover"
+  },
+  root: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "flex-end"
+  },
+  icon: {
+    margin: theme.spacing.unit * 2
+  },
+  iconHover: {
+    margin: theme.spacing.unit * 2,
+    "&:hover": {
+      color: red[800]
+    }
+  }
+});
+
+class PopupContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      quantity: 1
+      quantity: 1,
+      hover: false,
+      hoverTwo: false,
+      hoverThree: false
     };
   }
+  toggleHover = () => {
+    this.setState({ hover: !this.state.hover });
+  };
+  toggleHoverTwo = () => {
+    this.setState({ hoverTwo: !this.state.hoverTwo });
+  };
+  toggleHoverThree = () => {
+    this.setState({ hoverThree: !this.state.hoverThree });
+  };
 
   _addItemToCart = () => {
     console.log("PopupContainer _addItemToCart");
@@ -61,7 +125,202 @@ export default class PopupContainer extends Component {
     } else if (this.props.product) {
       const product = this.props.product ? this.props.product : null;
       const quantity = this.state.quantity;
+      const { classes } = this.props;
+
+      let linkStyle, linkStyleTwo, linkStyleThree;
+      if (this.state.hover) {
+        linkStyle = {
+          backgroundColor: "rgba(116, 51, 241, 1)",
+          marginRight: "1rem"
+        };
+      } else {
+        linkStyle = {
+          backgroundColor: "rgba(75, 13, 194, 0.5)",
+          marginRight: "1rem"
+        };
+      }
+
+      if (this.state.hoverTwo) {
+        linkStyleTwo = {
+          backgroundColor: "rgba(116, 51, 241, 1)",
+          marginLeft: "1rem"
+        };
+      } else {
+        linkStyleTwo = {
+          backgroundColor: "rgba(75, 13, 194, 0.5)",
+          marginLeft: "1rem"
+        };
+      }
+
+      if (this.state.hoverThree) {
+        linkStyleThree = {
+          backgroundColor: "rgba(116, 51, 241, 1)"
+        };
+      } else {
+        linkStyleThree = {
+          backgroundColor: "rgba(75, 13, 194, 0.5)"
+        };
+      }
       return (
+        <Paper
+          style={{
+            boxShadow: "none",
+            width: "100%",
+            marginTop: "1rem"
+          }}
+        >
+          <Card
+            className={classes.card}
+            style={{
+              width: "100%",
+              minWidth: "initial",
+              marginTop: "1rem"
+            }}
+          >
+            <CardContent
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                backgroundColor: "rgba(75, 13, 194, 0.5)"
+              }}
+            >
+              <Typography
+                variant="display1"
+                component="h2"
+                style={{
+                  color: "white",
+                  textTransform: "uppercase"
+                }}
+              >
+                {product.product_name}
+              </Typography>
+              <Typography
+                variant="display1"
+                component="h2"
+                style={{
+                  color: "white",
+                  textTransform: "uppercase"
+                }}
+              >
+                ${(product.price_in_cents / 100).toFixed(2) * quantity}
+              </Typography>
+            </CardContent>
+
+            <CardActions>
+              <CardContent
+                style={{
+                  paddingTop: "0",
+                  paddingBottom: "0",
+                  display: "flex",
+                  alignItems: "center",
+                  borderTopRightRadius: "1rem",
+                  borderBottomRightRadius: "1rem",
+                  boxShadow: "1px 1px 8px 1px #888888",
+                  paddingLeft: "0",
+                  paddingRight: "1rem",
+                  borderTopLeftRadius: "1rem",
+                  borderBottomLeftRadius: "1rem"
+                }}
+              >
+                <CardContent
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    backgroundColor: "rgba(75, 13, 194, 0.5)",
+                    borderTopLeftRadius: "1rem",
+                    borderBottomLeftRadius: "1rem",
+                    marginRight: "1rem"
+                  }}
+                >
+                  <Typography
+                    variant="display2"
+                    component="h2"
+                    style={{ color: "white" }}
+                  >
+                    QTY
+                  </Typography>
+                </CardContent>
+                <Button
+                  variant="fab"
+                  mini
+                  style={linkStyle}
+                  onMouseEnter={this.toggleHover}
+                  onMouseLeave={this.toggleHover}
+                  aria-label="Add"
+                  className={classes.button}
+                  onClick={this._decreaseQuantity}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path fill="white" d="M19 13H5v-2h14v2z" />
+                  </svg>
+                </Button>
+                <Typography
+                  variant="display2"
+                  component="h2"
+                  style={{
+                    margin: "initial"
+                  }}
+                >
+                  {quantity}
+                </Typography>
+                <Button
+                  variant="fab"
+                  mini
+                  style={linkStyleTwo}
+                  onMouseEnter={this.toggleHoverTwo}
+                  onMouseLeave={this.toggleHoverTwo}
+                  aria-label="Minus"
+                  className={classes.button}
+                  onClick={this._increaseQuantity}
+                >
+                  <Add style={{ color: "white" }} />
+                </Button>
+              </CardContent>
+            </CardActions>
+            <CardActions
+              style={{
+                display: "flex",
+                justifyContent: "center"
+              }}
+            >
+              <Button
+                variant="extendedFab"
+                aria-label="Add to shopping cart"
+                className={classes.button}
+                style={linkStyleThree}
+                onMouseEnter={this.toggleHoverThree}
+                onMouseLeave={this.toggleHoverThree}
+                onClick={this._addItemToCart}
+              >
+                <AddShoppingCart
+                  style={{
+                    color: "white"
+                  }}
+                />
+                <Typography
+                  variant="headline"
+                  component="h2"
+                  style={{
+                    margin: "initial",
+                    marginLeft: "1rem",
+                    color: "white"
+                  }}
+                >
+                  Add To Cart
+                </Typography>
+              </Button>
+            </CardActions>
+          </Card>
+        </Paper>
+      );
+    }
+    /* return (
         <div className="pop-up">
           <a className="close" onClick={this.props.closeModal}>
             &times;
@@ -102,8 +361,7 @@ export default class PopupContainer extends Component {
             </div>
           </div>
         </div>
-      );
-    }
+      ); */
   };
 
   render() {
@@ -116,7 +374,11 @@ export default class PopupContainer extends Component {
         contentStyle={{
           width: "auto",
           background: "none",
-          border: "none"
+          border: "none",
+          top: "20%",
+          left: "50%",
+          transform: "translateX(-53%)",
+          margin: "initial"
         }}
       >
         {this.renderPopup}
@@ -124,3 +386,5 @@ export default class PopupContainer extends Component {
     );
   }
 }
+
+export default withStyles(styles)(PopupContainer);

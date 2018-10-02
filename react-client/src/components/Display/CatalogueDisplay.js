@@ -2,27 +2,12 @@ import React, { Component, Fragment } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import SearchBar from "material-ui-search-bar";
 import PopupContainer from "./PopupContainer";
-import { AccountCircle, Visibility, VisibilityOff } from "@material-ui/icons";
 
 import {
-  Input,
-  InputLabel,
-  InputAdornment,
-  FormControl,
-  IconButton,
-  ListItem,
-  List,
-  TextField,
   Typography,
-  Toolbar,
-  AppBar,
-  Button,
   Paper,
-  Grid,
   withStyles,
-  Avatar,
   Card,
-  CardActions,
   CardContent,
   CardActionArea
 } from "@material-ui/core";
@@ -51,7 +36,8 @@ class CatalogueDisplay extends Component {
       query: null,
       showPopup: false,
       chosenProduct: null,
-      allProducts: null
+      allProducts: null,
+      hover: false
     };
   }
   componentDidMount() {
@@ -72,8 +58,28 @@ class CatalogueDisplay extends Component {
       .catch(error => console.error(error));
   }
 
+  toggleHover = () => {
+    this.setState({ hover: !this.state.hover });
+  };
+
   _generateTableRow = () => {
     const { classes } = this.props;
+
+    let linkStyle;
+    if (this.state.hover) {
+      linkStyle = {
+        width: "100%",
+        backgroundImage:
+          "linear-gradient(to right bottom, rgba(75, 13, 194, 0.85), rgba(75, 13, 194, 0.85))"
+      };
+    } else {
+      linkStyle = {
+        width: "100%",
+        backgroundImage:
+          "linear-gradient(to right bottom, rgba(75, 13, 194, 0.5), rgba(75, 13, 194, 0.5))"
+      };
+    }
+
     return this.state.allProducts.map(product => {
       const price = `\$${(product.price_in_cents / 100).toFixed(2)}`;
       return (
@@ -87,9 +93,9 @@ class CatalogueDisplay extends Component {
           onClick={() => this._getProductInfo(product)}
         >
           <CardActionArea
-            style={{
-              width: "100%"
-            }}
+            style={linkStyle}
+            onMouseEnter={() => this.toggleHover}
+            onMouseLeave={() => this.toggleHover}
           >
             <CardContent
               style={{
@@ -98,10 +104,18 @@ class CatalogueDisplay extends Component {
                 width: "100%"
               }}
             >
-              <Typography variant="display2" component="h2">
+              <Typography
+                variant="display2"
+                component="h2"
+                style={{ color: "white" }}
+              >
                 {product.product_name}
               </Typography>
-              <Typography variant="display2" component="h2">
+              <Typography
+                variant="display2"
+                component="h2"
+                style={{ color: "white" }}
+              >
                 {price}
               </Typography>
             </CardContent>
@@ -128,7 +142,7 @@ class CatalogueDisplay extends Component {
   searchProduct = () => {
     var productName = this.state.query;
 
-    fetch("/search", {
+    fetch("http://www.toqianren.com/search", {
       method: "POST",
       headers: {
         "x-access-token": document.cookie,
@@ -141,7 +155,8 @@ class CatalogueDisplay extends Component {
         if (product.length === 0) {
           alert("product cannot be found");
         } else {
-          var productList = document.querySelector(".productlist");
+          this.setState({ allProducts: product });
+          /* var productList = document.querySelector(".productlist");
 
           // clear product list table
           while (productList.firstChild) {
@@ -167,7 +182,7 @@ class CatalogueDisplay extends Component {
             this._getProductInfo(product[0]);
           };
 
-          productList.appendChild(row);
+          productList.appendChild(row); */
         }
       })
       .catch(error => console.error(error));
@@ -194,7 +209,7 @@ class CatalogueDisplay extends Component {
     const renderProductList = this.state.allProducts
       ? this._generateTableRow(classes)
       : null;
-    const bull = <span className={classes.bullet}>•</span>;
+
     return (
       <div
         className="display"
@@ -223,15 +238,15 @@ class CatalogueDisplay extends Component {
           style={{
             display: "flex",
             justifyContent: "center",
-            overflow: "scroll",
-            height: "100%"
+            overflow: "auto",
+            height: "100%",
+            marginTop: "2rem"
           }}
         >
           <Paper
             style={{
               boxShadow: "none",
-              width: "75%",
-              marginTop: "1rem"
+              width: "75%"
             }}
           >
             {renderProductList}
