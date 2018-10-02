@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ProductTable from './products_table/ProductTable';
+import ProductTable from './ProductTable';
 
 class OrderInfo extends Component{
   constructor(props){
@@ -9,21 +9,30 @@ class OrderInfo extends Component{
     }
   }
 
+  componentDidMount(){
+
+  }
+
+
   _onClick = (e) => {
     e.preventDefault()
     this.props.finishOrder(this.state.order[0].id)
   }
 
+  _renderOrder = (order) => {
+    return <ProductTable order={order} />
+  }
+
   render(){
-    const order = this.state.order;
-    const buttonDone = this.props.finishOrder ?
-      (<button id={order.id} onClick={this._onClick}>Done</button>) :
+    const order = this.props.order;
+    const buttonDone = this.props.finishOrder  ?
+      (<button className="order-info-button" id={order.id} onClick={this._onClick}>Done</button>) :
       null;
 
     return(
       <div className="order-details">
         <h1>Order #{order[0].id}</h1>
-        <ProductTable order={order} />
+        {this._renderOrder(this.props.order)}
         {buttonDone}
       </div>
     )

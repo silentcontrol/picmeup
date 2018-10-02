@@ -25,9 +25,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+<<<<<<< HEAD
 app.use("/", indexRouter);
 app.use("/owner", ownerRouter);
 app.set("secret", process.env.secret);
+=======
+app.use('/owner', ownerRouter);
+app.use('/', indexRouter);
+app.set('secret', process.env.secret);
+>>>>>>> fab17ea5901168ee445d98b70d6a312bf839b811
 
 // error handler
 app.use(function(err, req, res, next) {

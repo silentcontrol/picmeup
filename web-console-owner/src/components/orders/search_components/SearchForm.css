@@ -1,0 +1,22 @@
+.search-form{
+  display: flex;
+  flex-direction: column;
+}
+
+.search-input{
+  margin: 1rem 1rem 0.5rem 1rem;
+  padding-left: 0.75rem;
+  border-radius: 0.25em;
+  width: 10rem;
+  font-size: 1.25rem;
+}
+
+.search-button{
+line-height: 1.5rem;
+margin: 0.5rem 1rem 1rem 1rem;
+width: 8rem;
+border-radius: 0.25rem;
+background: #7938e8;
+color: white;
+font-weight: 800;
+}

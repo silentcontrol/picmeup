@@ -14,10 +14,6 @@
   height: 100%;
 }
 
-.orders-header{
-  padding: 0.5625rem 0.5625rem 0.5625rem 1.5rem;
-}
-
 .table-orders{
   width: 50%;
   margin-left: 1.5rem;
@@ -55,4 +51,14 @@ table.table-orders td{
   padding: 0.25rem;
   border-right: none;
   text-align: center;
+}
+
+.order-info-button{
+  line-height: 1.5rem;
+  margin: 0.5rem 0.5rem 0.5rem 0rem;
+  width: 8rem;
+  border-radius: 0.25rem;
+  background: #7938e8;
+  color: white;
+  font-weight: 800;
 }

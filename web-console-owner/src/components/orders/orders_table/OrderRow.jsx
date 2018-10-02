@@ -8,14 +8,10 @@ export default class OrderRow extends Component {
     }
   }
 
-  _onClickHandler = () => {
-    this.props.getOrderId(this.state.orderId);
-  }
-
   render(){
     const order = this.props.order;
     return(
-      <tr id={order.id} onClick={this._onClickHandler}>
+      <tr id={order.id} onClick={()=>this.props.getOrderId(order.id)}>
         <td>{order.id}</td>
         <td>{order.email}</td>
         <td className="last">${(order.order_total / 100).toFixed(2)}</td>
