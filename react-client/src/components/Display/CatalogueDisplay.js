@@ -9,7 +9,9 @@ import {
   withStyles,
   Card,
   CardContent,
-  CardActionArea
+  CardActionArea,
+  AppBar,
+  Toolbar
 } from "@material-ui/core";
 
 const styles = {
@@ -70,17 +72,17 @@ class CatalogueDisplay extends Component {
       linkStyle = {
         width: "100%",
         backgroundImage:
-          "linear-gradient(to right bottom, rgba(75, 13, 194, 0.85), rgba(75, 13, 194, 0.85))"
+          "linear-gradient(to right bottom, rgb(63, 81, 181, 0.85), rgb(63, 81, 181, 0.85))"
       };
     } else {
       linkStyle = {
         width: "100%",
         backgroundImage:
-          "linear-gradient(to right bottom, rgba(75, 13, 194, 0.5), rgba(75, 13, 194, 0.5))"
+          "linear-gradient(to right bottom, rgb(84, 105, 228,0.75), rgb(84, 105, 228,0.75))"
       };
     }
 
-    return this.state.allProducts.map(product => {
+    return this.state.allProducts.map((product, index) => {
       const price = `\$${(product.price_in_cents / 100).toFixed(2)}`;
       return (
         <Card
@@ -90,12 +92,14 @@ class CatalogueDisplay extends Component {
             minWidth: "initial",
             marginTop: "1rem"
           }}
+          key={index}
           onClick={() => this._getProductInfo(product)}
         >
           <CardActionArea
             style={linkStyle}
             onMouseEnter={() => this.toggleHover}
             onMouseLeave={() => this.toggleHover}
+            key={index}
           >
             <CardContent
               style={{
@@ -103,11 +107,13 @@ class CatalogueDisplay extends Component {
                 justifyContent: "space-between",
                 width: "100%"
               }}
+              key={index}
             >
               <Typography
                 variant="display2"
                 component="h2"
                 style={{ color: "white" }}
+                key={index}
               >
                 {product.product_name}
               </Typography>
@@ -115,6 +121,7 @@ class CatalogueDisplay extends Component {
                 variant="display2"
                 component="h2"
                 style={{ color: "white" }}
+                key={index}
               >
                 {price}
               </Typography>
@@ -136,6 +143,23 @@ class CatalogueDisplay extends Component {
 
   setQuery = value => {
     console.log(value);
+    if (value.length === 0) {
+      fetch("http://www.toqianren.com/products", {
+        headers: new Headers({
+          "x-access-token": document.cookie,
+          "Content-Type": "application/x-www-form-urlencoded"
+        })
+      })
+        .then(dataWrappedByPromise => {
+          console.log("dataWrappedByPromise", dataWrappedByPromise);
+          return dataWrappedByPromise.json();
+        })
+        .then(productList => {
+          console.log(productList);
+          this.setState({ allProducts: productList });
+        })
+        .catch(error => console.error(error));
+    }
     this.setState({ query: value });
   };
 
@@ -211,12 +235,17 @@ class CatalogueDisplay extends Component {
       : null;
 
     return (
-      <div
-        className="display"
-        style={{
-          padding: "1rem"
-        }}
-      >
+      <div className="display">
+        <AppBar
+          position="static"
+          style={{ backgroundColor: "#3f51b5", color: "white" }}
+        >
+          <Toolbar>
+            <Typography variant="display1" color="inherit">
+              CATAOGUE
+            </Typography>
+          </Toolbar>
+        </AppBar>
         <MuiThemeProvider>
           <SearchBar
             onChange={value => {

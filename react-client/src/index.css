@@ -5,7 +5,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   text-align: center;
   align-items: center;
-  background-color: #7433f1; }
+  background-color: #5469e4; }
   .navigation__home {
     display: initial; }
 
@@ -27,7 +27,7 @@
   .catalogue.active,
   .camera.active,
   .shopping-cart.active {
-    background-color: #4b0dc2;
+    background-color: #3f51b5;
     -webkit-box-shadow: inset 0px 0px 10px #c1c1c1;
     -moz-box-shadow: inset 0px 0px 10px #c1c1c1;
     box-shadow: inset 0px 0px 10px #c1c1c1; }
@@ -35,7 +35,7 @@
   .camera:hover,
   .shopping-cart:hover {
     cursor: pointer;
-    background-color: #4b0dc2; }
+    background-color: #3f51b5; }
 
 a {
   text-decoration: none; }
@@ -44,14 +44,10 @@ a {
   grid-column: center-start/center-end;
   grid-row: 1;
   height: 100%;
-  border-top: 0.5rem solid #7433f1;
-  border-left: 0.5rem solid #7433f1;
-  border-right: 0.5rem solid #7433f1;
   justify-items: center;
   overflow: hidden; }
   .display__home {
     grid-row: 1 / span 2;
-    border-bottom: 0.5rem solid #7433f1;
     padding: 1rem; }
 
 .react-html5-camera-photo {
@@ -137,7 +133,7 @@ a {
   transition: all 0.2s; }
   #camera--trigger:hover {
     cursor: pointer;
-    background-color: #7433f1; }
+    background-color: #3f51b5; }
 
 #camera--submit__photo {
   background-color: #aa82f6;
@@ -151,7 +147,7 @@ a {
   transition: all 0.2s; }
   #camera--submit__photo:hover {
     cursor: pointer;
-    background-color: #7433f1; }
+    background-color: #3f51b5; }
 
 .taken {
   height: 100px !important;

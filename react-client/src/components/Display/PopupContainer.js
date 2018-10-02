@@ -130,35 +130,35 @@ class PopupContainer extends Component {
       let linkStyle, linkStyleTwo, linkStyleThree;
       if (this.state.hover) {
         linkStyle = {
-          backgroundColor: "rgba(116, 51, 241, 1)",
+          backgroundColor: "rgb(63, 81, 181)",
           marginRight: "1rem"
         };
       } else {
         linkStyle = {
-          backgroundColor: "rgba(75, 13, 194, 0.5)",
+          backgroundColor: "rgb(84, 105, 228)",
           marginRight: "1rem"
         };
       }
 
       if (this.state.hoverTwo) {
         linkStyleTwo = {
-          backgroundColor: "rgba(116, 51, 241, 1)",
+          backgroundColor: "rgb(63, 81, 181)",
           marginLeft: "1rem"
         };
       } else {
         linkStyleTwo = {
-          backgroundColor: "rgba(75, 13, 194, 0.5)",
+          backgroundColor: "rgb(84, 105, 228)",
           marginLeft: "1rem"
         };
       }
 
       if (this.state.hoverThree) {
         linkStyleThree = {
-          backgroundColor: "rgba(116, 51, 241, 1)"
+          backgroundColor: "rgb(63, 81, 181)"
         };
       } else {
         linkStyleThree = {
-          backgroundColor: "rgba(75, 13, 194, 0.5)"
+          backgroundColor: "rgb(84, 105, 228)"
         };
       }
       return (
@@ -182,7 +182,7 @@ class PopupContainer extends Component {
                 display: "flex",
                 justifyContent: "space-between",
                 width: "100%",
-                backgroundColor: "rgba(75, 13, 194, 0.5)"
+                backgroundColor: "rgb(84, 105, 228)"
               }}
             >
               <Typography
@@ -207,7 +207,7 @@ class PopupContainer extends Component {
               </Typography>
             </CardContent>
 
-            <CardActions>
+            <CardActions style={{ padding: "3rem 1.5rem 2rem" }}>
               <CardContent
                 style={{
                   paddingTop: "0",
@@ -227,7 +227,7 @@ class PopupContainer extends Component {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    backgroundColor: "rgba(75, 13, 194, 0.5)",
+                    backgroundColor: "rgb(84, 105, 228)",
                     borderTopLeftRadius: "1rem",
                     borderBottomLeftRadius: "1rem",
                     marginRight: "1rem"
@@ -286,7 +286,8 @@ class PopupContainer extends Component {
             <CardActions
               style={{
                 display: "flex",
-                justifyContent: "center"
+                justifyContent: "center",
+                paddingBottom: "2rem"
               }}
             >
               <Button
