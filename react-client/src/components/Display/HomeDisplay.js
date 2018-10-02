@@ -2,6 +2,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Button from "@material-ui/core/Button";
 import React, { Component } from "react";
 import { Redirect, BrowserRouter } from "react-router";
+import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -35,7 +36,8 @@ class HomeDisplay extends Component {
       weightRange: "",
       showPassword: false,
       open: false,
-      redirect: false
+      redirect: false,
+      register: false
     };
   }
 
@@ -82,7 +84,7 @@ class HomeDisplay extends Component {
     console.log("password is,", this.state.password);
 
     axios
-      .post("/login", {
+      .post("http://www.toqianren.com/login", {
         email: this.state.email,
         password: this.state.password
       })
@@ -96,6 +98,10 @@ class HomeDisplay extends Component {
       });
   };
 
+  redirectToRegister = () => {
+    this.setState({ register: true });
+  };
+
   openModal = () => {
     this.setState({ open: true });
   };
@@ -106,10 +112,13 @@ class HomeDisplay extends Component {
   render() {
     const { classes } = this.props;
 
-    const { redirect } = this.state;
+    const { redirect, register } = this.state;
 
     if (redirect) {
       return <Redirect to="/catalogue" />;
+    } else if (register) {
+      this.setState({ register: false });
+      return <Redirect to="/register" />;
     }
     return (
       <div className="display display__home">
@@ -199,7 +208,7 @@ class HomeDisplay extends Component {
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                onClick={event => this.handleClick(event)}
+                onClick={event => this.redirectToRegister(event)}
               >
                 Register
               </Button>

@@ -54,7 +54,7 @@ class CartDisplay extends Component {
     const { cart } = this.props;
     if (cart.length > 0) {
       axios({
-        url: "/orders",
+        url: "http://www.toqianren.com/orders",
         method: "POST",
         headers: {
           "x-access-token": document.cookie

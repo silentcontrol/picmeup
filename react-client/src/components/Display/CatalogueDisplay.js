@@ -25,7 +25,7 @@ class CatalogueDisplay extends Component {
     };
   }
   componentDidMount() {
-    fetch("/products", {
+    fetch("http://www.toqianren.com/products", {
       headers: new Headers({
         "x-access-token": document.cookie,
         "Content-Type": "application/x-www-form-urlencoded"

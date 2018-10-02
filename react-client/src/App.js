@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Camera from "./containers/Camera/Camera";
 import Home from "./containers/Home/Home";
-import Catalogue from "./containers/Catalogue/Catalogue";
+import Register from "./containers/Register/Register";
 import ShoppingCart from "./containers/ShoppingCart/ShoppingCart";
+import Catalogue from "./containers/Catalogue/Catalogue";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 export default class App extends Component {
@@ -22,6 +23,7 @@ export default class App extends Component {
       <Router>
         <div className="container">
           <Route exact path={"/"} component={() => <Home />} />
+          <Route exact path={"/register"} component={() => <Register />} />
           <Route
             exact
             path={"/camera"}

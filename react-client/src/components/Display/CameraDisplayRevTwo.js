@@ -8,7 +8,7 @@ import PopupContainer from "./PopupContainer";
 var base64ToImage = require("base64-to-image");
 var fs = require("file-system");
 
-const API_HOST = "http://localhost:3001";
+const API_HOST = "http://www.toqianren.com";
 const API_NAMESPACE = "/annotations";
 const BASEURL = `${API_HOST}${API_NAMESPACE}`;
 
