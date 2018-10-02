@@ -1,28 +1,30 @@
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import Button from "@material-ui/core/Button";
 import React, { Component } from "react";
 import { Redirect, BrowserRouter } from "react-router";
 import { Link } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Popup from "reactjs-popup";
+import SearchBar from "material-ui-search-bar";
 
-import createHistory from "history/createBrowserHistory";
+import { AccountCircle, Visibility, VisibilityOff } from "@material-ui/icons";
 
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControl from "@material-ui/core/FormControl";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-
-import IconButton from "@material-ui/core/IconButton";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-
+import {
+  Input,
+  InputLabel,
+  InputAdornment,
+  FormControl,
+  IconButton,
+  ListItem,
+  List,
+  TextField,
+  Typography,
+  Toolbar,
+  AppBar,
+  Button,
+  Paper,
+  Grid,
+  withStyles
+} from "@material-ui/core";
 import axios from "axios";
-
 import classNames from "classnames";
 
 class HomeDisplay extends Component {
@@ -132,6 +134,33 @@ class HomeDisplay extends Component {
         </Button>
 
         <h1 className="header__primary">Welcome.</h1>
+        <MuiThemeProvider>
+          <SearchBar
+            onChange={value => {
+              console.log("onChange");
+              this.setQuery(value);
+            }}
+            onRequestSearch={() => {
+              console.log("onRequestSearch");
+              this.searchProduct();
+            }}
+            style={{
+              margin: "0 auto",
+              width: "100%"
+            }}
+          />
+        </MuiThemeProvider>
+        <section className="product">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody className="productlist"> </tbody>
+          </table>
+        </section>
         <Popup
           open={this.state.open}
           modal

@@ -67,18 +67,11 @@ export default class CameraDisplayRevTwo extends Component {
     const formData = new FormData();
     formData.append("image", imgData);
 
-    axios.post("/annotations", formData, {
+    axios.post("http://www.toqianren.com/annotations", formData, {
       onUploadProgress: progressEvent => {
         console.log(progressEvent.loaded / progressEvent.total);
       }
     });
-    // axios({
-    //   url: "/annotations",
-    //   data: formData,
-    //   headers: {
-    //     token: document.cookie
-    //   }
-    // });
   };
 
   renderPopup = () => {
@@ -156,7 +149,7 @@ export default class CameraDisplayRevTwo extends Component {
     const formData = new FormData();
     formData.append("image", file);
     axios
-      .post("/annotations", formData, {
+      .post("http://www.toqianren.com/annotations", formData, {
         headers: {
           "x-access-token": document.cookie
         }
@@ -233,19 +226,3 @@ export default class CameraDisplayRevTwo extends Component {
     );
   }
 }
-
-/**
- * <Popup
-          open={this.state.open}
-          modal
-          onClose={this.closeModal}
-          closeOnDocumentClick
-          contentStyle={{
-            width: "auto",
-            background: "none",
-            border: "none"
-          }}
-        >
-          {this.renderPopup}
-        </Popup>
- */

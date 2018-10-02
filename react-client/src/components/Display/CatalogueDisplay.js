@@ -1,18 +1,48 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import SearchBar from "material-ui-search-bar";
 import PopupContainer from "./PopupContainer";
+import { AccountCircle, Visibility, VisibilityOff } from "@material-ui/icons";
 
-const TableRow = ({ product, getProductInfo }) => {
-  const price = `\$${(product.price_in_cents / 100).toFixed(2)}`;
+import {
+  Input,
+  InputLabel,
+  InputAdornment,
+  FormControl,
+  IconButton,
+  ListItem,
+  List,
+  TextField,
+  Typography,
+  Toolbar,
+  AppBar,
+  Button,
+  Paper,
+  Grid,
+  withStyles,
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  CardActionArea
+} from "@material-ui/core";
 
-  return (
-    <tr onClick={() => getProductInfo(product)}>
-      <td>{product.id}</td>
-      <td>{product.product_name}</td>
-      <td>{price}</td>
-    </tr>
-  );
+const styles = {
+  card: {
+    minWidth: 275
+  },
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)"
+  },
+  title: {
+    marginBottom: 16,
+    fontSize: 14
+  },
+  pos: {
+    marginBottom: 12
+  }
 };
 class CatalogueDisplay extends Component {
   constructor(props) {
@@ -43,13 +73,40 @@ class CatalogueDisplay extends Component {
   }
 
   _generateTableRow = () => {
+    const { classes } = this.props;
     return this.state.allProducts.map(product => {
+      const price = `\$${(product.price_in_cents / 100).toFixed(2)}`;
       return (
-        <TableRow
-          getProductInfo={this._getProductInfo}
-          key={product.id}
-          product={product}
-        />
+        <Card
+          className={classes.card}
+          style={{
+            width: "100%",
+            minWidth: "initial",
+            marginTop: "1rem"
+          }}
+          onClick={() => this._getProductInfo(product)}
+        >
+          <CardActionArea
+            style={{
+              width: "100%"
+            }}
+          >
+            <CardContent
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%"
+              }}
+            >
+              <Typography variant="display2" component="h2">
+                {product.product_name}
+              </Typography>
+              <Typography variant="display2" component="h2">
+                {price}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
       );
     });
   };
@@ -124,8 +181,7 @@ class CatalogueDisplay extends Component {
   };
 
   render() {
-    const {} = this.props;
-
+    const { classes } = this.props;
     const popup = this.state.showPopup ? (
       <PopupContainer
         open={this.state.showPopup}
@@ -136,11 +192,16 @@ class CatalogueDisplay extends Component {
     ) : null;
 
     const renderProductList = this.state.allProducts
-      ? this._generateTableRow()
+      ? this._generateTableRow(classes)
       : null;
-
+    const bull = <span className={classes.bullet}>•</span>;
     return (
-      <div className="display">
+      <div
+        className="display"
+        style={{
+          padding: "1rem"
+        }}
+      >
         <MuiThemeProvider>
           <SearchBar
             onChange={value => {
@@ -157,16 +218,24 @@ class CatalogueDisplay extends Component {
             }}
           />
         </MuiThemeProvider>
-        <section className="product">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-              </tr>
-            </thead>
-            <tbody className="productlist"> {renderProductList}</tbody>
-          </table>
+        <section
+          className="product"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            overflow: "scroll",
+            height: "100%"
+          }}
+        >
+          <Paper
+            style={{
+              boxShadow: "none",
+              width: "75%",
+              marginTop: "1rem"
+            }}
+          >
+            {renderProductList}
+          </Paper>
         </section>
 
         {popup}
@@ -175,4 +244,4 @@ class CatalogueDisplay extends Component {
   }
 }
 
-export default CatalogueDisplay;
+export default withStyles(styles)(CatalogueDisplay);
