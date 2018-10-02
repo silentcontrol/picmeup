@@ -32,10 +32,16 @@ export default class Search extends Component {
   _getOrderId = (id) => {
     const AllOrders = this.state.allOrders;
     AllOrders.find(id).then(result => {
-      this.setState({
-        currentOrder: result,
-        error: null
-      })
+      if(result.length > 0){
+        this.setState({
+          currentOrder: result,
+          error: null
+        })
+      } else {
+        this.setState({
+          error: "Order ID does not exist."
+        })
+      }
     }).catch(err => {
       console.error('Search._getOrderId:', err)
       this.setState({
