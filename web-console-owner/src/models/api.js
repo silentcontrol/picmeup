@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_HOST = 'http://localhost:3001' //'http://www.toqianren.com'
+const API_HOST = 'http://www.toqianren.com' //'http://localhost:3001'
 const API_NAMESPACE = '/owner'
 const BASEURL = `${API_HOST}${API_NAMESPACE}`
 
