@@ -51,4 +51,14 @@ router.get('/search/:id', async (req, res) => {
   res.json(await dbQuery.getOrderDetailsById(id))
 })
 
+router.post('/addProduct', async (req, res) => {
+  console.log('req.body:', req.body)
+  const { product_name, price_in_cents } = req.body;
+  if((product_name.length > 0) && (price_in_cents > 0)){
+    res.json(await dbInsert.addProduct(product_name, price_in_cents))
+  } else {
+    res.sendStatus(400)
+  }
+})
+
 module.exports = router;
