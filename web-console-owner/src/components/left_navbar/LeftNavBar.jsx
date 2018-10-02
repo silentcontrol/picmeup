@@ -4,7 +4,8 @@ import SvgIcon from 'react-icons-kit';
 
 import { ic_history } from 'react-icons-kit/md/ic_history';
 import { ic_payment } from 'react-icons-kit/md/ic_payment';
-import { ic_search } from 'react-icons-kit/md/ic_search'
+import { ic_search } from 'react-icons-kit/md/ic_search';
+import { ic_add_box } from 'react-icons-kit/md/ic_add_box';
 
 import './LeftNavBar.css'
 
@@ -34,6 +35,10 @@ const LeftNavBar = ({ getView }) => {
       <Nav id='history' onClick={_onClick}>
         <NavIcon><SvgIcon size={20} icon={ic_history} /></NavIcon>
         <NavText> History </NavText>
+      </Nav>
+      <Nav id='addProduct' onClick={_onClick}>
+        <NavIcon><SvgIcon size={20} icon={ic_add_box} /></NavIcon>
+        <NavText> Add Product </NavText>
       </Nav>
       <Nav id='search' onClick={_onClick}>
         <NavIcon><SvgIcon size={20} icon={ic_search} /></NavIcon>

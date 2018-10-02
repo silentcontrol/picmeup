@@ -4,9 +4,9 @@ import './ProductTable.css';
 const ProductRow = ({ product }) => {
   return (<tr>
     <td>{product.product_name}</td>
-    <td>{product.price_in_cents / 100}</td>
+    <td>${(product.price_in_cents / 100).toFixed(2)}</td>
     <td>{product.quantity}</td>
-    <td>{product.line_total}</td>
+    <td>${(product.line_total / 100).toFixed(2)}</td>
   </tr>)
 
 }

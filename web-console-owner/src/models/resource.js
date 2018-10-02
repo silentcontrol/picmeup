@@ -23,10 +23,15 @@ const Resource = (endpoint) => {
     return api.post(`/${endpoint}/${id}`, data)
   }
 
+  function create(data){
+    return api.post(`/${endpoint}`, data)
+  }
+
   return {
     findAll,
     find,
-    update
+    update,
+    create
   }
 
 }

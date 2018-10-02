@@ -5,7 +5,7 @@ class OrderInfo extends Component{
   constructor(props){
     super(props)
     this.state = {
-      order: this.props.order,
+      order: null,
     }
   }
 
@@ -14,16 +14,20 @@ class OrderInfo extends Component{
     this.props.finishOrder(this.state.order[0].id)
   }
 
+  _renderOrder = (order) => {
+    return <ProductTable order={order} />
+  }
+
   render(){
-    const order = this.state.order;
-    const buttonDone = this.props.finishOrder ?
+    const order = this.props.order;
+    const buttonDone = this.props.finishOrder  ?
       (<button id={order.id} onClick={this._onClick}>Done</button>) :
       null;
 
     return(
       <div className="order-details">
         <h1>Order #{order[0].id}</h1>
-        <ProductTable order={order} />
+        {this._renderOrder(this.props.order)}
         {buttonDone}
       </div>
     )

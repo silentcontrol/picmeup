@@ -47,7 +47,7 @@ export default class Orders extends Component {
   }
 
   _getOrderId = (id) => {
-    const AllOrders = this.state.allOrders
+    const AllOrders = this.state.allOrders;
     AllOrders.find(id)
       .then(result => {
         console.log('_getOrderId:', result)

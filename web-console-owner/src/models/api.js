@@ -6,10 +6,10 @@ const BASEURL = `${API_HOST}${API_NAMESPACE}`
 
 const server = axios.create({
   baseURL: BASEURL,
-  timeout: 10000,
-  headers:{
-    'Content-type': 'application/vnd.api+json'
-  }
+  timeout: 10000 //,
+  // headers:{
+  //   'Content-type': 'application/vnd.api+json'
+  // }
 });
 
 function get(endpoint, data){
