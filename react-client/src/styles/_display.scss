@@ -8,6 +8,10 @@
   &__home {
     grid-row: 1 / span 2;
     padding: 1rem;
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
   }
 }
 
@@ -22,4 +26,28 @@
 
 #container-circles {
   bottom: 40%;
+}
+
+.Typist .Cursor {
+  display: inline-block;
+
+  &--blinking {
+    opacity: 1;
+    animation: blink 1s linear infinite;
+    @keyframes blink {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.Cursor {
+  font-size: 4rem;
 }

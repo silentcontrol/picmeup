@@ -4,7 +4,6 @@ const Fragment = React.Fragment;
 
 export default class Camera extends Component {
   render() {
-    const {} = this.props;
     console.log("Register.");
     return (
       <Fragment>

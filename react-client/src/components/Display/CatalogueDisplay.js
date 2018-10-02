@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import SearchBar from "material-ui-search-bar";
 import PopupContainer from "./PopupContainer";
@@ -43,7 +43,7 @@ class CatalogueDisplay extends Component {
     };
   }
   componentDidMount() {
-    fetch("http://www.toqianren.com/products", {
+    fetch("/products", {
       headers: new Headers({
         "x-access-token": document.cookie,
         "Content-Type": "application/x-www-form-urlencoded"
@@ -99,7 +99,6 @@ class CatalogueDisplay extends Component {
             style={linkStyle}
             onMouseEnter={() => this.toggleHover}
             onMouseLeave={() => this.toggleHover}
-            key={index}
           >
             <CardContent
               style={{
@@ -107,13 +106,11 @@ class CatalogueDisplay extends Component {
                 justifyContent: "space-between",
                 width: "100%"
               }}
-              key={index}
             >
               <Typography
                 variant="display2"
                 component="h2"
                 style={{ color: "white" }}
-                key={index}
               >
                 {product.product_name}
               </Typography>
@@ -121,7 +118,6 @@ class CatalogueDisplay extends Component {
                 variant="display2"
                 component="h2"
                 style={{ color: "white" }}
-                key={index}
               >
                 {price}
               </Typography>
@@ -144,7 +140,7 @@ class CatalogueDisplay extends Component {
   setQuery = value => {
     console.log(value);
     if (value.length === 0) {
-      fetch("http://www.toqianren.com/products", {
+      fetch("/products", {
         headers: new Headers({
           "x-access-token": document.cookie,
           "Content-Type": "application/x-www-form-urlencoded"
@@ -166,7 +162,7 @@ class CatalogueDisplay extends Component {
   searchProduct = () => {
     var productName = this.state.query;
 
-    fetch("http://www.toqianren.com/search", {
+    fetch("/search", {
       method: "POST",
       headers: {
         "x-access-token": document.cookie,
@@ -180,33 +176,6 @@ class CatalogueDisplay extends Component {
           alert("product cannot be found");
         } else {
           this.setState({ allProducts: product });
-          /* var productList = document.querySelector(".productlist");
-
-          // clear product list table
-          while (productList.firstChild) {
-            productList.removeChild(productList.firstChild);
-          }
-
-          var row = document.createElement("tr");
-          var dataName = document.createElement("td");
-          var dataPrice = document.createElement("td");
-
-          dataName.appendChild(
-            document.createTextNode(product[0].product_name)
-          );
-          dataPrice.appendChild(
-            document.createTextNode(product[0].price_in_cents)
-          );
-
-          row.appendChild(dataName);
-          row.appendChild(dataPrice);
-
-          console.log("inside search product, product is:", product[0]);
-          row.onclick = () => {
-            this._getProductInfo(product[0]);
-          };
-
-          productList.appendChild(row); */
         }
       })
       .catch(error => console.error(error));
@@ -242,7 +211,7 @@ class CatalogueDisplay extends Component {
         >
           <Toolbar>
             <Typography variant="display1" color="inherit">
-              CATAOGUE
+              CATALOGUE
             </Typography>
           </Toolbar>
         </AppBar>

@@ -1,33 +1,17 @@
 import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import {
-  Input,
-  InputLabel,
-  InputAdornment,
-  FormControl,
-  IconButton,
-  ListItem,
-  List,
-  TextField,
   Typography,
-  Toolbar,
-  AppBar,
   Button,
   Paper,
-  Grid,
   withStyles,
-  Avatar,
   Card,
   CardActions,
-  CardContent,
-  CardActionArea,
-  Icon,
-  Snackbar,
-  SnackbarContent
+  CardContent
 } from "@material-ui/core";
 
 import red from "@material-ui/core/colors/red";
-import { Add, Navigation, AddShoppingCart } from "@material-ui/icons";
+import { Add, AddShoppingCart } from "@material-ui/icons";
 
 const styles = theme => ({
   card: {
@@ -102,25 +86,46 @@ class PopupContainer extends Component {
   };
 
   renderPopup = () => {
+    const { classes } = this.props;
+
     if (!this.props.product) {
       return (
-        <div className="pop-up">
-          <a className="close" onClick={this.props.closeModal}>
-            &times;
-          </a>
-          <div className="pop-up__top-row">
-            <div className="pop-up__product-name">Not Found</div>
-          </div>
-
-          <div className="pop-up__bottom-row">
-            <div
-              className="button button__cancel"
-              onClick={this.props.closeModal}
+        <Paper
+          style={{
+            boxShadow: "none",
+            width: "100%",
+            marginTop: "1rem"
+          }}
+        >
+          <Card
+            className={classes.card}
+            style={{
+              width: "100%",
+              minWidth: "initial",
+              marginTop: "1rem"
+            }}
+          >
+            <CardContent
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                backgroundColor: "rgb(84, 105, 228)"
+              }}
             >
-              Cancel
-            </div>
-          </div>
-        </div>
+              <Typography
+                variant="display3"
+                component="h2"
+                style={{
+                  color: "white",
+                  textTransform: "uppercase"
+                }}
+              >
+                Sorry, <br /> Product Not Found.
+              </Typography>
+            </CardContent>
+          </Card>
+        </Paper>
       );
     } else if (this.props.product) {
       const product = this.props.product ? this.props.product : null;
@@ -186,7 +191,7 @@ class PopupContainer extends Component {
               }}
             >
               <Typography
-                variant="display1"
+                variant="display3"
                 component="h2"
                 style={{
                   color: "white",
@@ -196,14 +201,17 @@ class PopupContainer extends Component {
                 {product.product_name}
               </Typography>
               <Typography
-                variant="display1"
+                variant="display3"
                 component="h2"
                 style={{
                   color: "white",
                   textTransform: "uppercase"
                 }}
               >
-                ${(product.price_in_cents / 100).toFixed(2) * quantity}
+                $
+                {((product.price_in_cents / 100).toFixed(2) * quantity).toFixed(
+                  2
+                )}
               </Typography>
             </CardContent>
 
@@ -321,48 +329,6 @@ class PopupContainer extends Component {
         </Paper>
       );
     }
-    /* return (
-        <div className="pop-up">
-          <a className="close" onClick={this.props.closeModal}>
-            &times;
-          </a>
-          <div className="pop-up__top-row">
-            <div className="pop-up__product-name">{product.product_name}</div>
-            <div className="pop-up__product-price">
-              ${(product.price_in_cents / 100).toFixed(2)}
-            </div>
-          </div>
-          <div className="pop-up__middle-row">
-            <div className="pop-up__label">qty</div>
-            <div className="button__container">
-              <div
-                className="button button__minus"
-                onClick={this._decreaseQuantity}
-              >
-                -
-              </div>
-              <div className="pop-up__quantity">{quantity}</div>
-              <div
-                className="button button__plus"
-                onClick={this._increaseQuantity}
-              >
-                +
-              </div>
-            </div>
-          </div>
-          <div className="pop-up__bottom-row">
-            <div
-              className="button button__cancel"
-              onClick={this.props.closeModal}
-            >
-              Cancel
-            </div>
-            <div className="button button__add" onClick={this._addItemToCart}>
-              Add
-            </div>
-          </div>
-        </div>
-      ); */
   };
 
   render() {
@@ -379,7 +345,8 @@ class PopupContainer extends Component {
           top: "20%",
           left: "50%",
           transform: "translateX(-53%)",
-          margin: "initial"
+          margin: "initial",
+          height: "5rem"
         }}
       >
         {this.renderPopup}

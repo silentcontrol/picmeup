@@ -9,7 +9,7 @@ export default class ShoppingCart extends Component {
     console.log("ShoppingCart");
     return (
       <Fragment>
-        <CartDisplay cart={cart} />
+        <CartDisplay cart={cart} updateCart={this.props.updateCart} />
         <Navigation activeButton={"shopping-cart"} />
       </Fragment>
     );

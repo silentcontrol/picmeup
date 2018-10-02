@@ -1,9 +1,8 @@
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import React, { Component } from "react";
-import { Redirect, BrowserRouter } from "react-router";
-import { Link } from "react-router-dom";
+import { Redirect } from "react-router";
 import Popup from "reactjs-popup";
-import SearchBar from "material-ui-search-bar";
+import Typist from "react-typist";
 
 import { AccountCircle, Visibility, VisibilityOff } from "@material-ui/icons";
 
@@ -13,16 +12,12 @@ import {
   InputAdornment,
   FormControl,
   IconButton,
-  ListItem,
-  List,
-  TextField,
   Typography,
   Toolbar,
   AppBar,
   Button,
-  Paper,
-  Grid,
-  withStyles
+  withStyles,
+  Paper
 } from "@material-ui/core";
 import axios from "axios";
 import classNames from "classnames";
@@ -39,37 +34,9 @@ class HomeDisplay extends Component {
       showPassword: false,
       open: false,
       redirect: false,
-      register: false
+      register: false,
+      renderMsg: false
     };
-  }
-
-  componentDidMount() {
-    fetch("/products")
-      .then(dataWrappedByPromise => {
-        console.log(dataWrappedByPromise);
-        return dataWrappedByPromise.json();
-      })
-      .then(productList => {
-        productList.slice(9).forEach(product => {
-          var row = document.createElement("tr");
-          var dataName = document.createElement("td");
-          var dataPrice = document.createElement("td");
-
-          dataName.appendChild(document.createTextNode(product.product_name));
-          const price = `\$${(product.price_in_cents / 100).toFixed(2)}`;
-          dataPrice.appendChild(document.createTextNode(price));
-
-          row.appendChild(dataName);
-          row.appendChild(dataPrice);
-          row.setAttribute("id", product.id);
-          row.onclick = () => {
-            this._getProductInfo(product);
-          };
-
-          document.querySelector(".productlist").appendChild(row);
-        });
-      })
-      .catch(error => console.error(error));
   }
 
   handleChange = prop => event => {
@@ -86,7 +53,7 @@ class HomeDisplay extends Component {
     console.log("password is,", this.state.password);
 
     axios
-      .post("http://www.toqianren.com/login", {
+      .post("/login", {
         email: this.state.email,
         password: this.state.password
       })
@@ -111,11 +78,13 @@ class HomeDisplay extends Component {
     this.setState({ open: false });
   };
 
+  onHeaderTyped = () => {
+    this.setState({ renderMsg: true });
+  };
+
   render() {
     const { classes } = this.props;
-
     const { redirect, register } = this.state;
-
     if (redirect) {
       return <Redirect to="/catalogue" />;
     } else if (register) {
@@ -124,43 +93,62 @@ class HomeDisplay extends Component {
     }
     return (
       <div className="display display__home">
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.button}
-          onClick={event => this.openModal()}
+        <AppBar position="static">
+          <Toolbar>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              onClick={event => this.openModal()}
+            >
+              Sign In
+            </Button>
+          </Toolbar>
+        </AppBar>
+        <Paper
+          style={{
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            paddingTop: "5rem",
+            backgroundImage:
+              "linear-gradient(to right bottom, rgb(10,13,30,1),rgb(19,25,55,0.98) )",
+            color: "white"
+          }}
         >
-          Sign In
-        </Button>
+          <div className="TypistExample">
+            <Typist
+              className="TypistExample-header"
+              avgTypingSpeed={40}
+              startDelay={2000}
+              onTypingDone={this.onHeaderTyped}
+            >
+              <p style={{ fontSize: "5rem", color: "#f50057" }}>Pic.Me.Up</p>
+            </Typist>
+            <div className="TypistExample-content" style={{ fontSize: "3rem" }}>
+              {this.state.renderMsg ? (
+                <Typist
+                  className="TypistExample-message"
+                  cursor={{ hideWhenDone: true }}
+                >
+                  * Snap and Shop
+                  <Typist.Delay ms={1250} />
+                  <br />* Android Only
+                  <Typist.Delay ms={1250} />
+                  <br />* iOS coming for versio
+                  <Typist.Delay ms={500} />n 2.0
+                  <Typist.Backspace count={22} delay={1000} />
+                  <Typist.Delay ms={750} />
+                  pending...
+                  <Typist.Delay ms={1250} />
+                  <br />
+                  {""}
+                </Typist>
+              ) : null}
+            </div>
+          </div>
+        </Paper>
 
-        <h1 className="header__primary">Welcome.</h1>
-        <MuiThemeProvider>
-          <SearchBar
-            onChange={value => {
-              console.log("onChange");
-              this.setQuery(value);
-            }}
-            onRequestSearch={() => {
-              console.log("onRequestSearch");
-              this.searchProduct();
-            }}
-            style={{
-              margin: "0 auto",
-              width: "100%"
-            }}
-          />
-        </MuiThemeProvider>
-        <section className="product">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-              </tr>
-            </thead>
-            <tbody className="productlist"> </tbody>
-          </table>
-        </section>
         <Popup
           open={this.state.open}
           modal

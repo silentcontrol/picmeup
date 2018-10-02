@@ -5,10 +5,7 @@ import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 
 import {
-  Input,
-  InputLabel,
   InputAdornment,
-  FormControl,
   IconButton,
   ListItem,
   List,
@@ -17,11 +14,10 @@ import {
   Toolbar,
   AppBar,
   Button,
-  Paper,
-  Grid
+  Paper
 } from "@material-ui/core";
 
-import { AccountCircle, Visibility, VisibilityOff } from "@material-ui/icons";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 import axios from "axios";
 
@@ -62,7 +58,7 @@ class RegisterDisplay extends Component {
 
     if (this.state.password === this.state.passwordConfirmation) {
       axios
-        .post("http://www.toqianren.com/register", {
+        .post("/register", {
           firstName: this.state.firstName,
           lastName: this.state.lastName,
           email: this.state.email,

@@ -17,11 +17,13 @@
     "react-dom": "^16.5.2",
     "react-dom-camera": "^0.3.2",
     "react-html5-camera-photo": "^1.2.8-beta.0",
+    "react-icons-kit": "^1.1.13",
     "react-modal": "^3.6.1",
     "react-modal-box": "^1.0.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-speech-recognition": "^1.0.7",
+    "react-typist": "^2.0.4",
     "reactjs-popup": "^1.2.0"
   },
   "scripts": {

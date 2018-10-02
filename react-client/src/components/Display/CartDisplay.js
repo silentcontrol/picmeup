@@ -4,8 +4,6 @@ import {
   Typography,
   Paper,
   withStyles,
-  Card,
-  CardContent,
   CardActions,
   Table,
   TableBody,
@@ -17,22 +15,7 @@ import {
   Button
 } from "@material-ui/core";
 
-/* const TableRow = ({ cartItem, deleteItem }) => {
-  const { product, quantity } = cartItem;
-  const price = (product.price_in_cents / 100).toFixed(2);
-
-  return (
-    <tr>
-      <td>{product.product_name}</td>
-      <td>{`\$${price}`}</td>
-      <td>{quantity}</td>
-      <td>{(price * quantity).toFixed(2)}</td>
-      <td>
-        <button onClick={() => deleteItem(product)}>Remove Item</button>
-      </td>
-    </tr>
-  );
-}; */
+import { Add, Delete } from "@material-ui/icons";
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -43,7 +26,7 @@ const CustomTableCell = withStyles(theme => ({
   body: {
     fontSize: "1.2rem"
   },
-  root: { paddingRight: "1rem", textAlign: "center" }
+  root: { textAlign: "center", padding: "0" }
 }))(TableCell);
 
 const styles = theme => ({
@@ -59,20 +42,7 @@ const styles = theme => ({
     width: "100%"
   }
 });
-/* 
-let id = 0; 
- function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-} 
- 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9)
-]; */
+
 class CartDisplay extends Component {
   constructor(props) {
     super(props);
@@ -99,7 +69,7 @@ class CartDisplay extends Component {
     const { cart } = this.props;
     if (cart.length > 0) {
       axios({
-        url: "http://www.toqianren.com/orders",
+        url: "/orders",
         method: "POST",
         headers: {
           "x-access-token": document.cookie
@@ -119,16 +89,13 @@ class CartDisplay extends Component {
   };
 
   _deleteItem = cartItem => {
-    console.log("deleteItem cartItem", cartItem);
     const { currentCart } = this.state;
-    console.log("currentCart", currentCart);
+
     const newCart = currentCart.filter(
-      item => item.product.product_name !== cartItem.product_name
+      item => item.product.product_name !== cartItem.product.product_name
     );
-    console.log("newcart", newCart);
-    this.setState({
-      currentCart: newCart
-    });
+
+    this.props.updateCart(newCart);
   };
 
   _closeModal = () => {
@@ -138,27 +105,48 @@ class CartDisplay extends Component {
     });
   };
 
+  _increaseQuantity = event => {
+    const id = event.target.id;
+
+    let oldCart = [...this.state.currentCart];
+    let oldQuantity = oldCart[id].quantity;
+
+    let newQuantity = oldQuantity + 1;
+    oldCart[id].quantity = newQuantity;
+    let updatedCart = oldCart;
+    this.setState({
+      currentCart: updatedCart
+    });
+  };
+
+  _decreaseQuantity = event => {
+    const id = event.target.id;
+    let oldCart = [...this.state.currentCart];
+    let oldQuantity = oldCart[id].quantity;
+    if (oldQuantity > 1) {
+      let newQuantity = oldQuantity - 1;
+      oldCart[id].quantity = newQuantity;
+      let updatedCart = oldCart;
+
+      this.setState({
+        currentCart: updatedCart
+      });
+    }
+  };
+
   render() {
     const { classes } = this.props;
-    /*   const tableRows = this.state.loading
-      ? null
-      : this.state.currentCart.map(cartItem => {
-          return (
-            <TableRow
-              key={cartItem.product.id}
-              cartItem={cartItem}
-              deleteItem={this._deleteItem}
-            />
-          );
-        }); */
+
     let linkStyle;
     if (this.state.hover) {
       linkStyle = {
-        backgroundColor: "rgb(63, 81, 181)"
+        backgroundColor: "rgb(63, 81, 181)",
+        width: "30rem"
       };
     } else {
       linkStyle = {
-        backgroundColor: "rgb(84, 105, 228)"
+        backgroundColor: "rgb(84, 105, 228)",
+        width: "30rem"
       };
     }
 
@@ -183,20 +171,57 @@ class CartDisplay extends Component {
                   <CustomTableCell numeric>Price</CustomTableCell>
                   <CustomTableCell numeric>Quantity</CustomTableCell>
                   <CustomTableCell numeric>Unit Total</CustomTableCell>
+                  <CustomTableCell />
                 </TableRow>
               </TableHead>
               <TableBody>
-                {this.state.currentCart.map(cartItem => {
+                {this.state.currentCart.map((cartItem, index) => {
                   return (
-                    <TableRow className={classes.row} key={cartItem.product.id}>
+                    <TableRow className={classes.row}>
                       <CustomTableCell component="th" scope="row">
                         {cartItem.product.product_name}
                       </CustomTableCell>
                       <CustomTableCell numeric>
                         ${(cartItem.product.price_in_cents / 100).toFixed(2)}
                       </CustomTableCell>
-                      <CustomTableCell numeric>
+                      <CustomTableCell
+                        numeric
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-around",
+                          paddingBottom: "1rem",
+                          paddingTop: "1rem"
+                        }}
+                      >
+                        <Button
+                          variant="fab"
+                          mini
+                          aria-label="Minus"
+                          className={classes.button}
+                          id={index}
+                          onClick={this._increaseQuantity}
+                        >
+                          <Add style={{ color: "white" }} />
+                        </Button>
                         {cartItem.quantity}
+                        <Button
+                          variant="fab"
+                          mini
+                          aria-label="Add"
+                          className={classes.button}
+                          id={index}
+                          onClick={this._decreaseQuantity}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                          >
+                            <path fill="white" d="M19 13H5v-2h14v2z" />
+                          </svg>
+                        </Button>
                       </CustomTableCell>
                       <CustomTableCell numeric>
                         $
@@ -205,62 +230,54 @@ class CartDisplay extends Component {
                           cartItem.quantity
                         ).toFixed(2)}
                       </CustomTableCell>
+                      <CustomTableCell>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          className={classes.button}
+                          onClick={() => this._deleteItem(cartItem)}
+                        >
+                          <Delete className={classes.rightIcon} />
+                        </Button>
+                      </CustomTableCell>
                     </TableRow>
                   );
                 })}
               </TableBody>
             </Table>
           </Paper>
-          <CardActions
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              paddingBottom: "2rem",
-              paddingTop: "2rem"
-            }}
-          >
-            <Button
-              variant="extendedFab"
-              aria-label="Place Order"
-              className={classes.button}
-              style={linkStyle}
-              onMouseEnter={this.toggleHover}
-              onMouseLeave={this.toggleHover}
-              onClick={this._submitOrder}
+          {this.state.currentCart.length > 0 ? (
+            <CardActions
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                paddingBottom: "2rem",
+                paddingTop: "2rem"
+              }}
             >
-              <Typography
-                variant="headline"
-                component="h2"
-                style={{
-                  margin: "initial",
-                  marginLeft: "1rem",
-                  color: "white"
-                }}
+              <Button
+                variant="extendedFab"
+                aria-label="Place Order"
+                className={classes.button}
+                style={linkStyle}
+                onMouseEnter={this.toggleHover}
+                onMouseLeave={this.toggleHover}
+                onClick={this._submitOrder}
               >
-                Place Order
-              </Typography>
-            </Button>
-          </CardActions>
+                <Typography
+                  variant="headline"
+                  component="h2"
+                  style={{
+                    margin: "initial",
+                    color: "white"
+                  }}
+                >
+                  Place Order
+                </Typography>
+              </Button>
+            </CardActions>
+          ) : null}
         </Paper>
-        {/* <div className="display">
-        <section className="product">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Unit Total</th>
-                <th scope="col" />
-              </tr>
-            </thead>
-            <tbody className="productlist">{tableRows}</tbody>
-          </table>
-        </section>
-        <button className="button button__submit" onClick={this._submitOrder}>
-          Submit
-        </button>
-      </div> */}
       </Fragment>
     );
   }

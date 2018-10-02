@@ -18,7 +18,14 @@ export default class App extends Component {
     this.setState({ cart: updatedCart });
   };
 
+  updateCart = cartList => {
+    this.setState({
+      cart: cartList
+    });
+  };
+
   render() {
+    console.log("App Cart:", this.state.cart);
     return (
       <Router>
         <div className="container">
@@ -39,7 +46,12 @@ export default class App extends Component {
           <Route
             exact
             path={"/shoppingcart"}
-            component={() => <ShoppingCart cart={this.state.cart} />}
+            component={() => (
+              <ShoppingCart
+                updateCart={this.updateCart}
+                cart={this.state.cart}
+              />
+            )}
           />
         </div>
       </Router>

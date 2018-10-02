@@ -2,15 +2,10 @@ import React, { Component } from "react";
 import Camera, { FACING_MODES, IMAGE_TYPES } from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import axios from "axios";
-import Popup from "reactjs-popup";
 import PopupContainer from "./PopupContainer";
-// import QuantityContainer from "./QuantityContainer";
-var base64ToImage = require("base64-to-image");
-var fs = require("file-system");
-
-const API_HOST = "http://www.toqianren.com";
-const API_NAMESPACE = "/annotations";
-const BASEURL = `${API_HOST}${API_NAMESPACE}`;
+import { withStyles, Button } from "@material-ui/core";
+import SvgIcon from "react-icons-kit";
+import { ic_cloud_upload } from "react-icons-kit/md/ic_cloud_upload";
 
 function dataURLtoFile(dataurl, filename) {
   var arr = dataurl.split(","),
@@ -24,7 +19,7 @@ function dataURLtoFile(dataurl, filename) {
   return new File([u8arr], filename, { type: mime });
 }
 
-export default class CameraDisplayRevTwo extends Component {
+class CameraDisplayRevTwo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -67,7 +62,7 @@ export default class CameraDisplayRevTwo extends Component {
     const formData = new FormData();
     formData.append("image", imgData);
 
-    axios.post("http://www.toqianren.com/annotations", formData, {
+    axios.post("/annotations", formData, {
       onUploadProgress: progressEvent => {
         console.log(progressEvent.loaded / progressEvent.total);
       }
@@ -145,25 +140,30 @@ export default class CameraDisplayRevTwo extends Component {
   uploadHandler = () => {
     console.log("uploadHandler is clicked.");
     var file = dataURLtoFile(this.state.selectedFile, "hello.jpeg");
-
+    console.log(document.cookie);
     const formData = new FormData();
     formData.append("image", file);
     axios
-      .post("http://www.toqianren.com/annotations", formData, {
+      .post("/annotations", formData, {
         headers: {
           "x-access-token": document.cookie
         }
       })
       .then(result => {
         if (result.data.type === "not found") {
+          console.log("not found");
           this.setState({ open: true, result: "not found" });
         } else if (result.data.type === "found") {
+          console.log("found");
           this.setState({
             open: true,
             result: "found",
             popupDisplayContent: result.data.product[0]
           });
         }
+      })
+      .catch(error => {
+        console.log("error is,", error);
       });
   };
 
@@ -175,6 +175,7 @@ export default class CameraDisplayRevTwo extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     const popup = this.state.popupDisplayContent ? (
       <PopupContainer
         open={this.state.open}
@@ -215,10 +216,19 @@ export default class CameraDisplayRevTwo extends Component {
           }}
         />
 
-        <div style={{ display: "flex" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
           <img src="//:0" alt="" id="camera--output" className="taken" />
 
-          <button onClick={this.uploadHandler}>Upload!</button>
+          <Button
+            variant="contained"
+            size="large"
+            color="secondary"
+            style={{ margin: 0, width: "50%" }}
+            className={classes.button}
+            onClick={this.uploadHandler}
+          >
+            <SvgIcon size={30} icon={ic_cloud_upload} />
+          </Button>
         </div>
 
         {popup}
@@ -226,3 +236,20 @@ export default class CameraDisplayRevTwo extends Component {
     );
   }
 }
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
+  leftIcon: {
+    marginRight: theme.spacing.unit
+  },
+  rightIcon: {
+    marginLeft: theme.spacing.unit
+  },
+  iconSmall: {
+    fontSize: 20
+  }
+});
+
+export default withStyles(styles)(CameraDisplayRevTwo);
