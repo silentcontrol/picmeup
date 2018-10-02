@@ -1,0 +1,11 @@
+div.is-error{
+  border-radius: 0.5em;
+  background: #ffd2d2;
+  box-shadow: 1px 1px 3px;
+  height: 2rem;
+  padding: 1rem;
+  color: #D8000C;
+  width: 30rem;
+  margin-left: 2rem;
+  text-align: center;
+}

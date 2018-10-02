@@ -3,6 +3,7 @@ import OrderTable from './orders_table/OrderTable';
 import OrderInfo from './products_table/OrderInfo';
 import Loading from './loading/Loading'
 import Headers from './headers/Headers'
+import ErrorMessage from './error_component/ErrorMessage'
 
 import Resource from '../../models/resource';
 
@@ -15,7 +16,8 @@ export default class Orders extends Component {
       showOrder: false,
       currentOrderId: null,
       orderDetails: null,
-      allOrders: Resource(this.props.resource)
+      allOrders: Resource(this.props.resource),
+      error: null
     }
   }
 
@@ -25,37 +27,35 @@ export default class Orders extends Component {
       .then(result => {
         this.setState({
           orders: result,
-          loading: false
+          loading: false,
+          error: null
         })
       })
       .catch(error => {
         console.error('Errors:', error)
-      })
-  }
-
-  _requestOrderDetails = () => {
-    const AllOrders = this.state.allOrders
-    AllOrders.find(this.state.currentOrderId)
-        .then(result =>{
-          this.setState({
-            orderDetails: result
-          })
-        }).catch(error => {
-          console.error(error);
+        this.setState({
+          loading: false,
+          error: "Server Error: Cannot get all products."
         })
+      })
   }
 
   _getOrderId = (id) => {
     const AllOrders = this.state.allOrders;
     AllOrders.find(id)
       .then(result => {
-        console.log('_getOrderId:', result)
         this.setState({
           currentOrderId: id,
           showOrder: true,
-          orderDetails: result
+          orderDetails: result,
+          error: null
         })
-      }).catch(err => console.error(err))
+      }).catch(err => {
+        console.error(err)
+        this.setState({
+          error: "Server Error: Cannot get details of selected order."
+        })
+      })
   }
 
   _finishOrder = (id) => {
@@ -66,10 +66,16 @@ export default class Orders extends Component {
         this.setState({
           orders: [...unfinishedOrders],
           showOrder: false,
-          orderDetails: null
+          orderDetails: null,
+          error: null
         })
       })
-      .catch(err => console.error('Error:', err));
+      .catch(err => {
+        console.error('Error:', err)
+        this.setState({
+          error: "Server Error: Cannot set order status to done."
+        })
+    });
   }
 
   _renderOrderDetails = () => {
@@ -85,10 +91,12 @@ export default class Orders extends Component {
   }
 
   render(){
-    const orderTable = this.state.loading ? (<Loading />) :
+    const { loading, error } = this.state;
+    const orderTable = loading ? (<Loading />) :
       <OrderTable getOrderId={this._getOrderId} orders={this.state.orders} />
     const orderDetails = this._renderOrderDetails();
     const orderHeader = <Headers resource={this.props.resource} />
+    const errorMessage = error ? <ErrorMessage message={error} /> : null;
     return(
       <div>
         {orderHeader}
@@ -96,6 +104,7 @@ export default class Orders extends Component {
           {orderTable}
           {orderDetails}
         </div>
+        {errorMessage}
       </div>
       )
   }

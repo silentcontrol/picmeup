@@ -3,6 +3,7 @@ import Headers from './headers/Headers'
 import AddProductForm from './addproduct_component/AddProductForm'
 import AddProductInfo from './addproduct_component/AddProductInfo'
 import Resource from '../../models/resource'
+import ErrorMessage from './error_component/ErrorMessage'
 import './addproduct_component/AddProduct.css'
 
 
@@ -22,27 +23,26 @@ export default class AddProduct extends Component {
     console.log('product:', product);
     addProductResource.create(product)
       .then(result => {
-        console.log('result', result);
         this.setState({
           product: result.data[0],
-          showProductSummary: true
+          showProductSummary: true,
+          error: null
         })
       })
       .catch(err => {
         console.error('Server error adding product:', err)
+        this.setState({
+          showProductSummary: false,
+          product: null,
+          error: "Internal Server Error: Did not successfully added product."
+        })
       })
-  }
-
-  _showError = (err) => {
-    this.setState({
-      error: err
-    })
   }
 
   render(){
     const { showProductSummary, product, error } = this.state;
     const addProductInfo = showProductSummary ? <AddProductInfo product={product}/> : null;
-    const errorFlag = error ? <p>Error: {error} </p> : null;
+    const errorFlag = error ? <ErrorMessage message={error} /> : null;
     return (
       <div>
         <Headers resource={"Add New Product"}/>

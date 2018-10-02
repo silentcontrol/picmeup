@@ -8,10 +8,6 @@ export default class OrderRow extends Component {
     }
   }
 
-  // _onClickHandler = () => {
-  //   this.props.;
-  // }
-
   render(){
     const order = this.props.order;
     return(

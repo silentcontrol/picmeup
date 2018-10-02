@@ -3,6 +3,7 @@ import OrderInfo from './products_table/OrderInfo'
 import SearchForm from './search_components/SearchForm'
 import Resource from '../../models/resource';
 import Headers from './headers/Headers'
+import ErrorMessage from './error_component/ErrorMessage'
 
 export default class Search extends Component {
   constructor(props){
@@ -10,7 +11,8 @@ export default class Search extends Component {
     this.state = {
       currentOrder: null,
       allOrders: Resource(this.props.resource),
-      loading: true
+      loading: true,
+      error: null
     }
   }
 
@@ -22,7 +24,8 @@ export default class Search extends Component {
 
   _clearOrderInfo = () => {
     this.setState({
-      currentOrder: null
+      currentOrder: null,
+      error: null
     })
   }
 
@@ -30,20 +33,29 @@ export default class Search extends Component {
     const AllOrders = this.state.allOrders;
     AllOrders.find(id).then(result => {
       this.setState({
-        currentOrder: result
+        currentOrder: result,
+        error: null
       })
-    }).catch(err => console.error('Search._getOrderId:', err))
+    }).catch(err => {
+      console.error('Search._getOrderId:', err)
+      this.setState({
+        error: "Server Error: Cannot get details for specified order ID."
+      })
+    })
 
   }
 
   render(){
-    const orderRender = this.state.currentOrder ? <OrderInfo order={this.state.currentOrder} /> : null;
+    const { currentOrder, error } = this.state;
+    const orderRender = currentOrder ? <OrderInfo order={currentOrder} /> : null;
+    const errorMessage = error ? <ErrorMessage message={error} /> : null;
     return(
       <div className="search-container">
         <Headers resource={this.props.resource} />
         <SearchForm clearOrderInfo={this._clearOrderInfo}
           getOrderId={this._getOrderId}/>
         {orderRender}
+        {errorMessage}
       </div>
     )
   }

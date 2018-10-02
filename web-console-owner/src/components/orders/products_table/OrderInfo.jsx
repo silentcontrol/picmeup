@@ -5,9 +5,14 @@ class OrderInfo extends Component{
   constructor(props){
     super(props)
     this.state = {
-      order: null,
+      order: this.props.order,
     }
   }
+
+  componentDidMount(){
+
+  }
+
 
   _onClick = (e) => {
     e.preventDefault()
