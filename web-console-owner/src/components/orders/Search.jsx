@@ -29,7 +29,6 @@ export default class Search extends Component {
   _getOrderId = (id) => {
     const AllOrders = this.state.allOrders;
     AllOrders.find(id).then(result => {
-      console.log('Search._getOrderId', result)
       this.setState({
         currentOrder: result
       })

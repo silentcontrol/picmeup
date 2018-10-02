@@ -37,7 +37,6 @@ export default class Orders extends Component {
     const AllOrders = this.state.allOrders
     AllOrders.find(this.state.currentOrderId)
         .then(result =>{
-          console.log('_requestOrderDetails:', result)
           this.setState({
             orderDetails: result
           })

@@ -21,7 +21,7 @@ class OrderInfo extends Component{
   render(){
     const order = this.props.order;
     const buttonDone = this.props.finishOrder  ?
-      (<button id={order.id} onClick={this._onClick}>Done</button>) :
+      (<button className="order-info-button" id={order.id} onClick={this._onClick}>Done</button>) :
       null;
 
     return(
